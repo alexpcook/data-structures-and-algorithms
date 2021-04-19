@@ -64,3 +64,15 @@ func BenchmarkLogFirstTwoBoxes(b *testing.B) {
 		LogFirstTwoBoxes(test)
 	}
 }
+
+func TestLogAllPairsOfBoxes(t *testing.T) {
+	test := getTestCases()[0]
+	LogAllPairsOfBoxes(test)
+}
+
+func BenchmarkLogAllPairsOfBoxes(b *testing.B) {
+	test := getTestCases()[0]
+	for i := 0; i < b.N; i++ {
+		LogAllPairsOfBoxes(test)
+	}
+}

@@ -15,3 +15,13 @@ func LogFirstTwoBoxes(boxes []string) {
 	fmt.Println(boxes[0])
 	fmt.Println(boxes[1])
 }
+
+// LogAllPairsOfBoxes prints all pairs of boxes from the boxes slice.
+// It has time complexity O(n^2).
+func LogAllPairsOfBoxes(boxes []string) {
+	for _, box1 := range boxes {
+		for _, box2 := range boxes {
+			fmt.Println(box1, box2)
+		}
+	}
+}

@@ -1,3 +1,3 @@
 # data-structures-and-algorithms
 
-Data structures and algorithms
+This repository contains exercises from [Udemy's Data Structures and Algorithms course](https://www.udemy.com/course/master-the-coding-interview-data-structures-algorithms/).

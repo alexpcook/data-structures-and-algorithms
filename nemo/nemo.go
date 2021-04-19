@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// FindNemo prints "found nemo" if names contains "nemo"
-// O(n) --> linear time
+// FindNemo prints "found nemo" each time it encounters name "nemo".
+// It has linear time complexity O(n).
 func FindNemo(names []string) {
 	for _, name := range names {
 		if name == "nemo" {

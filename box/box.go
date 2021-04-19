@@ -1,3 +1,4 @@
+// Package box implements a library to output the contents of a sample of boxes
 package box
 
 import "fmt"

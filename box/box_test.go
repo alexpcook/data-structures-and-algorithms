@@ -76,3 +76,17 @@ func BenchmarkLogAllPairsOfBoxes(b *testing.B) {
 		LogAllPairsOfBoxes(test)
 	}
 }
+
+func TestLogBoxesRecursive(t *testing.T) {
+	tests := []int{1e0, 1e1}
+	for _, test := range tests {
+		LogBoxesRecursive(test)
+	}
+}
+
+func BenchmarkLogBoxesRecursive(b *testing.B) {
+	test := 10
+	for i := 0; i < b.N; i++ {
+		LogBoxesRecursive(test)
+	}
+}

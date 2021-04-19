@@ -25,3 +25,11 @@ func LogAllPairsOfBoxes(boxes []string) {
 		}
 	}
 }
+
+// LogBoxesRecursive creates n loops.
+// It has time complexity O(n!).
+func LogBoxesRecursive(n int) {
+	for i := 0; i < n; i++ { // O(n)
+		LogBoxesRecursive(i - 1) // O(n-1), O(n-2), ...
+	}
+}

@@ -11,6 +11,7 @@ func FindNemo(names []string) {
 	for _, name := range names {
 		if name == "nemo" {
 			fmt.Println("found nemo")
+			break
 		}
 	}
 }

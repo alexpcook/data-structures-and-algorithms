@@ -2,7 +2,7 @@ package google
 
 // HasSumWithPair1 determines whether a pair of distinct elements in nums
 // adds up to sum. It assumes nums is sorted.
-// It has linear time complexity O(n).
+// It has linear time complexity O(n) and constant space complexity O(1).
 func HasSumWithPair1(nums []int, sum int) bool {
 	low := 0
 	high := len(nums) - 1
@@ -23,7 +23,7 @@ func HasSumWithPair1(nums []int, sum int) bool {
 
 // HasSumWithPair2 determines whether a pair of distinct elements in nums
 // adds up to sum. It does not assume that nums is sorted.
-// It has linear time complexity O(n).
+// It has linear time complexity O(n) and linear space complexity O(n).
 func HasSumWithPair2(nums []int, sum int) bool {
 	pastNumsComplement := make(map[int]int)
 

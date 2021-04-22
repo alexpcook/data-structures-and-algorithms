@@ -47,7 +47,7 @@ func (ht *HashTable) String() string {
 	str := "["
 	for _, kv := range ht.data {
 		if kv != nil {
-			str += fmt.Sprintf(" %s: %s", kv[0], kv[1])
+			str += fmt.Sprintf(" %s:%s", kv[0], kv[1])
 		}
 	}
 	return str + " ]"

@@ -57,6 +57,9 @@ func BasicArrayOperations() {
 // Insert puts a rune at a specific position in a slice of runes.
 // It has time complexity O(n).
 func Insert(data []rune, index int, value rune) []rune {
+	if elems := len(data); elems == 0 || elems == index {
+		return append(data, value)
+	}
 	data = append(data[:index+1], data[index:]...)
 	data[index] = value
 	return data

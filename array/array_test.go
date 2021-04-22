@@ -67,3 +67,25 @@ func TestDelete(t *testing.T) {
 		}
 	}
 }
+
+func TestMergeSortedSlices(t *testing.T) {
+	tests := []struct {
+		s1, s2, want []int
+	}{
+		{[]int{}, []int{}, []int{}},
+		{nil, nil, []int{}},
+		{nil, []int{1, 57, 398}, []int{1, 57, 398}},
+		{[]int{4, 8, 19, 89}, []int{}, []int{4, 8, 19, 89}},
+		{[]int{1, 2, 3}, []int{4, 5, 6}, []int{1, 2, 3, 4, 5, 6}},
+		{[]int{4, 5, 6}, []int{1, 2, 3}, []int{1, 2, 3, 4, 5, 6}},
+		{[]int{14}, []int{1, 13, 45, 78}, []int{1, 13, 14, 45, 78}},
+		{[]int{67, 89}, []int{13, 54, 67, 68, 87, 90}, []int{13, 54, 67, 67, 68, 87, 89, 90}},
+		{[]int{-7, -1, 0, 4}, []int{-17, -2, 1, 5}, []int{-17, -7, -2, -1, 0, 1, 4, 5}},
+	}
+
+	for i, test := range tests {
+		if got := MergeSortedSlices(test.s1, test.s2); !reflect.DeepEqual(got, test.want) {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, got)
+		}
+	}
+}

@@ -70,3 +70,45 @@ func Insert(data []rune, index int, value rune) []rune {
 func Delete(data []rune, index int) []rune {
 	return append(data[:index], data[index+1:]...)
 }
+
+// MergeSortedSlices takes sorted slices s1 and s2 and merges them into a single sorted slice.
+// It has time complexity O(a + b), where a is the length of s1 and b is the length of s2.
+func MergeSortedSlices(s1, s2 []int) []int {
+	if s1 == nil && s2 == nil {
+		return []int{}
+	}
+
+	s1Len := len(s1)
+	s2Len := len(s2)
+	if s1Len == 0 {
+		return s2
+	} else if s2Len == 0 {
+		return s1
+	}
+
+	merged := make([]int, s1Len+s2Len)
+
+	var s1Pos, s2Pos int
+	for i := 0; i < s1Len+s2Len; i++ {
+		s1Val := s1[s1Pos]
+		s2Val := s2[s2Pos]
+
+		if s1Val < s2Val {
+			merged[i] = s1Val
+			s1Pos++
+			if s1Pos >= s1Len {
+				merged = append(merged[:i+1], s2[s2Pos:]...)
+				break
+			}
+		} else {
+			merged[i] = s2Val
+			s2Pos++
+			if s2Pos >= s2Len {
+				merged = append(merged[:i+1], s1[s1Pos:]...)
+				break
+			}
+		}
+	}
+
+	return merged
+}

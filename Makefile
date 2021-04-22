@@ -4,7 +4,7 @@ TEST_PACKAGES="./..."
 all: test
 
 build:
-	go build -o ${BINARY_NAME} main.go
+	go build -o ${BINARY_NAME}
 
 test:
 	go test -v -bench . -benchmem ${TEST_PACKAGES}

@@ -16,38 +16,57 @@ func NewHashTable(size int) *HashTable {
 }
 
 // Get returns a value from the hash table given a key.
-// It has time complexity O(1), assuming that the _hash function is extremely fast.
+// It has time complexity O(1), assuming that the _hash function is extremely fast and there are no collisions.
+// If there are collisions, it has time complexity O(n).
 func (ht *HashTable) Get(key string) string {
 	node := ht.data[ht._hash(key)]
-	if node == nil {
-		return ""
+	for i := 0; i < len(node)-1; i += 2 {
+		if node[i] == key {
+			return node[i+1] // If no collisions, we always get here upon first iteration (i == 0), so time complexity is O(1).
+		}
 	}
-	return node[1]
+	return ""
 }
 
 // Set sets a key/value pair of the hash table.
-// It has time complexity O(1), assuming that the _hash function is extremely fast.
+// It has time complexity O(1), assuming that the _hash function is extremely fast and there are no collisions.
+// If there are collisions, it has time complexity O(n).
 func (ht *HashTable) Set(key, value string) {
 	hash := ht._hash(key)
 	if ht.data[hash] == nil {
 		ht.data[hash] = make([]string, 2)
+		ht.data[hash][0] = key
+		ht.data[hash][1] = value
+	} else {
+		for i := 0; i < len(ht.data[hash])-1; i += 2 {
+			if ht.data[hash][i] == key {
+				ht.data[hash][i+1] = value
+				return // If no collisions, we always get here upon first iteration (i == 0), so time complexity is O(1).
+			}
+		}
+		ht.data[hash] = append(ht.data[hash], key, value) // This is the O(n) case when collisions occur.
 	}
-	ht.data[hash][0] = key
-	ht.data[hash][1] = value
 }
 
 // Delete removes a key/value pair of the hash table.
-// It has time complexity O(1), assuming that the _hash function is extremely fast.
+// It has time complexity O(1), assuming that the _hash function is extremely fast and there are no collisions.
+// If there are collisions, it has time complexity O(n).
 func (ht *HashTable) Delete(key string) {
-	ht.data[ht._hash(key)] = nil
+	hash := ht._hash(key)
+	for i := 0; i < len(ht.data[hash])-1; i += 2 {
+		if ht.data[hash][i] == key {
+			ht.data[hash] = append(ht.data[hash][:i], ht.data[hash][i+2:]...)
+			return // If no collisions, we always get here upon first iteration (i == 0), so time complexity is O(1).
+		}
+	}
 }
 
 // String implements the fmt.Stringer interface on *HashTable
 func (ht *HashTable) String() string {
 	str := "["
-	for _, kv := range ht.data {
-		if kv != nil {
-			str += fmt.Sprintf(" %s:%s", kv[0], kv[1])
+	for _, hash := range ht.data {
+		for i := 0; i < len(hash)-1; i += 2 {
+			str += fmt.Sprintf(" %s:%s", hash[i], hash[i+1])
 		}
 	}
 	return str + " ]"

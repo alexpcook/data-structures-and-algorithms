@@ -61,6 +61,32 @@ func (ht *HashTable) Delete(key string) {
 	}
 }
 
+// Keys returns the keys of the hash table.
+// It has time complexity O(n) assuming no collisions.
+// If there are collisions, it has O(n^2) time complexity.
+func (ht *HashTable) Keys() []string {
+	keys := make([]string, 0)
+	for _, hash := range ht.data {
+		for i := 0; i < len(hash)-1; i += 2 {
+			keys = append(keys, hash[i])
+		}
+	}
+	return keys
+}
+
+// Values returns the values of the hash table.
+// It has time complexity O(n).
+// If there are collisions, it has O(n^2) time complexity.
+func (ht *HashTable) Values() []string {
+	values := make([]string, 0)
+	for _, hash := range ht.data {
+		for i := 1; i < len(hash); i += 2 {
+			values = append(values, hash[i])
+		}
+	}
+	return values
+}
+
 // String implements the fmt.Stringer interface on *HashTable
 func (ht *HashTable) String() string {
 	str := "["

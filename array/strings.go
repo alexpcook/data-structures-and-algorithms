@@ -6,10 +6,9 @@ package array
 func ReverseString(data string) string {
 	var reversedData string
 	dataRunes := []rune(data)
-	dataLen := len(dataRunes)
 
-	for i := range dataRunes {
-		reversedData += string(dataRunes[dataLen-i-1])
+	for i := len(dataRunes) - 1; i > -1; i-- {
+		reversedData += string(dataRunes[i])
 	}
 
 	return reversedData

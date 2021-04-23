@@ -72,8 +72,10 @@ func (ll *LinkedList) Insert(data, index int) error {
 
 	if index == 0 {
 		ll.Prepend(data)
+		return nil
 	} else if index == ll.length {
 		ll.Append(data)
+		return nil
 	}
 
 	var currNode *linkedListNode = ll.head.next

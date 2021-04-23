@@ -78,19 +78,17 @@ func (ll *LinkedList) Insert(data, index int) error {
 		return nil
 	}
 
-	var currNode *linkedListNode = ll.head.next
-	var prevNode *linkedListNode = ll.head
+	var currNode *linkedListNode = ll.head
+	var prevNode *linkedListNode = nil
 
-	for i := 1; i < ll.length; i++ {
-		if i == index {
-			newNode := &linkedListNode{data, currNode}
-			prevNode.next = newNode
-			break
-		}
+	i := 0
+	for i != index {
 		prevNode = currNode
 		currNode = currNode.next
+		i++
 	}
 
+	prevNode.next = &linkedListNode{data, currNode}
 	ll.length++
 
 	return nil

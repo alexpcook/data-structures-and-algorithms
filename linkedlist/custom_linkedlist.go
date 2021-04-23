@@ -95,3 +95,40 @@ func (ll *LinkedList) Insert(data, index int) error {
 
 	return nil
 }
+
+// Delete removes the specified index from *LinkedList.
+// It has time complexity O(n).
+func (ll *LinkedList) Delete(index int) error {
+	if index < 0 || index > ll.length-1 {
+		return fmt.Errorf("invalid index value %d", index)
+	}
+
+	if ll.length == 1 {
+		return fmt.Errorf("cannot delete when only one value remains")
+	}
+
+	var currNode *linkedListNode = ll.head
+	var prevNode *linkedListNode = nil
+
+	i := 0
+	for i != index {
+		prevNode = currNode
+		currNode = currNode.next
+		i++
+	}
+
+	if prevNode == nil {
+		ll.head = currNode.next
+	} else {
+		prevNode.next = currNode.next
+	}
+
+	ll.length--
+	if ll.length == 1 {
+		ll.tail = ll.head
+	} else if ll.length == index {
+		ll.tail = prevNode
+	}
+
+	return nil
+}

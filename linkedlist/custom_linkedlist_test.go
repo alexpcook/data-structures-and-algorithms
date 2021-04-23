@@ -130,3 +130,36 @@ func TestInsert(t *testing.T) {
 		}
 	}
 }
+
+func TestDelete(t *testing.T) {
+	tests := []struct {
+		ll      *LinkedList
+		index   int
+		isError bool
+		want    *LinkedList
+	}{
+		{NewLinkedList(3), 0, true, nil},
+		{NewLinkedList(3, 4), -1, true, nil},
+		{NewLinkedList(3, 4), 2, true, nil},
+		{NewLinkedList(3, 4), 0, false, NewLinkedList(4)},
+		{NewLinkedList(3, 4), 1, false, NewLinkedList(3)},
+		{NewLinkedList(3, 4, 5), 1, false, NewLinkedList(3, 5)},
+		{NewLinkedList(3, 4, 5, 6), 3, false, NewLinkedList(3, 4, 5)},
+		{NewLinkedList(3, 4, 5, 6), 2, false, NewLinkedList(3, 4, 6)},
+	}
+
+	for i, test := range tests {
+		err := test.ll.Delete(test.index)
+
+		if test.isError {
+			if err == nil {
+				t.Fatalf("test %d: want error, got nil", i)
+			}
+			continue
+		}
+
+		if !reflect.DeepEqual(test.ll, test.want) {
+			t.Fatalf("test %d: want %#v, got %#v", i, test.want, test.ll)
+		}
+	}
+}

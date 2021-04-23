@@ -3,14 +3,14 @@ package linkedlist
 import "fmt"
 
 type LinkedList struct {
-	head   *linkedListNode
-	tail   *linkedListNode
+	head   *node
+	tail   *node
 	length int
 }
 
-type linkedListNode struct {
+type node struct {
 	value int
-	next  *linkedListNode
+	next  *node
 }
 
 // NewLinkedList creates a LinkedList with initial value head
@@ -19,12 +19,12 @@ type linkedListNode struct {
 func NewLinkedList(head int, data ...int) *LinkedList {
 	linkedList := new(LinkedList)
 	linkedList.length = len(data) + 1
-	linkedList.head = new(linkedListNode)
+	linkedList.head = new(node)
 	linkedList.head.value = head
 
 	currentNode := linkedList.head
 	for _, d := range data {
-		currentNode.next = new(linkedListNode)
+		currentNode.next = new(node)
 		currentNode.next.value = d
 		currentNode = currentNode.next
 	}
@@ -50,7 +50,7 @@ func (ll LinkedList) String() string {
 // Append adds data to the tail of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Append(data int) {
-	newTail := new(linkedListNode)
+	newTail := new(node)
 	newTail.value = data
 	ll.tail.next = newTail
 	ll.tail = newTail
@@ -60,7 +60,7 @@ func (ll *LinkedList) Append(data int) {
 // Prepend adds data to the head of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Prepend(data int) {
-	newHead := new(linkedListNode)
+	newHead := new(node)
 	newHead.value = data
 	newHead.next = ll.head
 	ll.head = newHead
@@ -83,8 +83,8 @@ func (ll *LinkedList) Insert(data, index int) error {
 		return nil
 	}
 
-	var currNode *linkedListNode = ll.head
-	var prevNode *linkedListNode = nil
+	var currNode *node = ll.head
+	var prevNode *node = nil
 
 	i := 0
 	for i != index {
@@ -93,7 +93,7 @@ func (ll *LinkedList) Insert(data, index int) error {
 		i++
 	}
 
-	prevNode.next = new(linkedListNode)
+	prevNode.next = new(node)
 	prevNode.next.value = data
 	prevNode.next.next = currNode
 	ll.length++
@@ -112,8 +112,8 @@ func (ll *LinkedList) Delete(index int) error {
 		return fmt.Errorf("cannot delete when only one value remains")
 	}
 
-	var currNode *linkedListNode = ll.head
-	var prevNode *linkedListNode = nil
+	var currNode *node = ll.head
+	var prevNode *node = nil
 
 	i := 0
 	for i != index {

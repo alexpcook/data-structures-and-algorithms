@@ -36,3 +36,36 @@ func TestNewLinkedList(t *testing.T) {
 
 	fmt.Println(ll)
 }
+
+func TestAppend(t *testing.T) {
+	tests := []struct {
+		ll   *LinkedList
+		data int
+	}{
+		{NewLinkedList(1), 2},
+		{NewLinkedList(-4, -8, 19, 20), 45},
+	}
+
+	for i, test := range tests {
+		oldTail := test.ll.tail
+		oldLen := test.ll.length
+
+		test.ll.Append(test.data)
+
+		if oldTail.next != test.ll.tail {
+			t.Fatalf("test %d: want old tail next to equal new tail, got next=%v and tail=%v", i, oldTail.next, test.ll.tail)
+		}
+
+		if test.ll.tail.value != test.data {
+			t.Fatalf("test %d: want tail %d, got %d", i, test.data, test.ll.tail.value)
+		}
+
+		if oldLen+1 != test.ll.length {
+			t.Fatalf("test %d: want length %d, got %d", i, oldLen+1, test.ll.length)
+		}
+
+		if tailPtr := test.ll.tail.next; tailPtr != nil {
+			t.Fatalf("test %d: want tail next nil, got %v", i, tailPtr)
+		}
+	}
+}

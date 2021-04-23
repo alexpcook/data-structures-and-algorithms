@@ -44,3 +44,12 @@ func (ll LinkedList) String() string {
 
 	return str
 }
+
+// Append adds data to the tail of *LinkedList.
+// It has time complexity O(1).
+func (ll *LinkedList) Append(data int) {
+	newTail := &linkedListNode{data, nil}
+	ll.tail.next = newTail
+	ll.tail = newTail
+	ll.length++
+}

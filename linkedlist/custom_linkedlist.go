@@ -109,20 +109,12 @@ func (ll *LinkedList) Delete(index int) error {
 		return fmt.Errorf("cannot delete when only one value remains")
 	}
 
-	var currNode *node = ll.head
-	var prevNode *node = nil
-
-	i := 0
-	for i != index {
-		prevNode = currNode
-		currNode = currNode.next
-		i++
-	}
+	prevNode := ll.get_node(index - 1)
 
 	if prevNode == nil {
-		ll.head = currNode.next
+		ll.head = ll.head.next
 	} else {
-		prevNode.next = currNode.next
+		prevNode.next = prevNode.next.next
 	}
 
 	ll.length--
@@ -133,4 +125,19 @@ func (ll *LinkedList) Delete(index int) error {
 	}
 
 	return nil
+}
+
+func (ll *LinkedList) get_node(index int) *node {
+	if index < 0 || index > ll.length-1 {
+		return nil
+	}
+
+	node := ll.head
+	i := 0
+	for i != index {
+		node = node.next
+		i++
+	}
+
+	return node
 }

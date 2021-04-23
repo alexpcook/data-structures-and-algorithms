@@ -13,6 +13,9 @@ type linkedListNode struct {
 	next  *linkedListNode
 }
 
+// NewLinkedList creates a LinkedList with initial value head
+// and an optional list of data to append after head.
+// It has time complexity O(n) when it needs to loop over data, otherwise O(1).
 func NewLinkedList(head int, data ...int) *LinkedList {
 	linkedList := new(LinkedList)
 	linkedList.length = len(data) + 1
@@ -28,6 +31,8 @@ func NewLinkedList(head int, data ...int) *LinkedList {
 	return linkedList
 }
 
+// String implements the fmt.Stringer interface for LinkedList.
+// It has time complexity O(n).
 func (ll LinkedList) String() string {
 	str := ""
 

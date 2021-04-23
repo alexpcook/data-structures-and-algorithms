@@ -82,17 +82,8 @@ func (ll *LinkedList) Insert(data, index int) error {
 		return nil
 	}
 
-	var currNode *node = ll.head
-	var prevNode *node = nil
-
-	i := 0
-	for i != index {
-		prevNode = currNode
-		currNode = currNode.next
-		i++
-	}
-
-	prevNode.next = new_node(data, currNode)
+	prevNode := ll.get_node(index - 1)
+	prevNode.next = new_node(data, prevNode.next)
 	ll.length++
 
 	return nil

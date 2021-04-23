@@ -23,9 +23,9 @@ func NewLinkedList(head int, data ...int) *LinkedList {
 	linkedList.head.value = head
 
 	currentNode := linkedList.head
-	for i := 0; i < len(data); i++ {
+	for _, d := range data {
 		currentNode.next = new(linkedListNode)
-		currentNode.next.value = data[i]
+		currentNode.next.value = d
 		currentNode = currentNode.next
 	}
 	linkedList.tail = currentNode

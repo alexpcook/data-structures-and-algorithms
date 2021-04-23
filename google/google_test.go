@@ -43,3 +43,22 @@ func TestHasSumWithPair2(t *testing.T) {
 		}
 	}
 }
+
+func TestDecompressString(t *testing.T) {
+	tests := []struct {
+		data, want string
+	}{
+		{"4[abc]2[e]6[o]p", "abcabcabcabceeoooooop"},
+		{"10[a]", "aaaaaaaaaa"},
+		{"3[abc]4[ab]c", "abcabcabcababababc"},
+		{"2[3[a]b]", "aaabaaab"},
+	}
+
+	for i, test := range tests {
+		if got, err := DecompressString(test.data); err != nil {
+			t.Fatalf("test %d: %v", i, err)
+		} else if got != test.want {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, got)
+		}
+	}
+}

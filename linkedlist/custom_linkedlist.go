@@ -13,19 +13,21 @@ type node struct {
 	next  *node
 }
 
+func new_node(value int, next *node) *node {
+	return &node{value, next}
+}
+
 // NewLinkedList creates a LinkedList with initial value head
 // and an optional list of data to append after head.
 // It has time complexity O(n) when it needs to loop over data, otherwise O(1).
 func NewLinkedList(head int, data ...int) *LinkedList {
 	linkedList := new(LinkedList)
 	linkedList.length = len(data) + 1
-	linkedList.head = new(node)
-	linkedList.head.value = head
+	linkedList.head = new_node(head, nil)
 
 	currentNode := linkedList.head
 	for _, d := range data {
-		currentNode.next = new(node)
-		currentNode.next.value = d
+		currentNode.next = new_node(d, nil)
 		currentNode = currentNode.next
 	}
 	linkedList.tail = currentNode
@@ -50,8 +52,7 @@ func (ll LinkedList) String() string {
 // Append adds data to the tail of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Append(data int) {
-	newTail := new(node)
-	newTail.value = data
+	newTail := new_node(data, nil)
 	ll.tail.next = newTail
 	ll.tail = newTail
 	ll.length++
@@ -60,9 +61,7 @@ func (ll *LinkedList) Append(data int) {
 // Prepend adds data to the head of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Prepend(data int) {
-	newHead := new(node)
-	newHead.value = data
-	newHead.next = ll.head
+	newHead := new_node(data, ll.head)
 	ll.head = newHead
 	ll.length++
 }
@@ -93,9 +92,7 @@ func (ll *LinkedList) Insert(data, index int) error {
 		i++
 	}
 
-	prevNode.next = new(node)
-	prevNode.next.value = data
-	prevNode.next.next = currNode
+	prevNode.next = new_node(data, currNode)
 	ll.length++
 
 	return nil

@@ -1,6 +1,9 @@
 package hashtable
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Time complexity of hash table operations
 // - Insert O(1)
@@ -30,4 +33,20 @@ func BasicHashTableOperations() {
 	// Search O(1) is the same time complexity as lookup because
 	// no iteration is required to find the value given a key
 	fmt.Println(phonebook["Sally Doe"])
+}
+
+// FirstRecurringCharacter returns the first repeated integer from the data slice.
+// If there is no repeated integer, the error is non-nil.
+// It has time complexity O(n).
+func FirstRecurringCharacter(data []int) (int, error) {
+	previousChars := make(map[int]bool)
+
+	for _, i := range data {
+		if previousChars[i] {
+			return i, nil
+		}
+		previousChars[i] = true
+	}
+
+	return 0, errors.New("did not find a repeated integer in data")
 }

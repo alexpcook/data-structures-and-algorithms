@@ -67,24 +67,22 @@ func (ll *LinkedList) Prepend(data int) {
 }
 
 // Insert adds data to *LinkedList at position index.
-// It has time complexity O(n), except in the special cases of
-// prepend (index == 0) and append (index == *LinkedList.length).
+// It has time complexity O(n).
 func (ll *LinkedList) Insert(data, index int) error {
 	if index < 0 || index > ll.length {
 		return fmt.Errorf("invalid index value %d", index)
 	}
 
-	if index == 0 {
-		ll.Prepend(data)
-		return nil
-	} else if index == ll.length {
-		ll.Append(data)
-		return nil
-	}
-
 	prevNode := ll.get_node(index - 1)
-	prevNode.next = new_node(data, prevNode.next)
-	ll.length++
+
+	if prevNode == nil {
+		ll.Prepend(data)
+	} else if prevNode.next == nil {
+		ll.Append(data)
+	} else {
+		prevNode.next = new_node(data, prevNode.next)
+		ll.length++
+	}
 
 	return nil
 }

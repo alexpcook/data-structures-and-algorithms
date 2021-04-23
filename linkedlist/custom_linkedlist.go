@@ -19,11 +19,13 @@ type linkedListNode struct {
 func NewLinkedList(head int, data ...int) *LinkedList {
 	linkedList := new(LinkedList)
 	linkedList.length = len(data) + 1
-	linkedList.head = &linkedListNode{head, nil}
+	linkedList.head = new(linkedListNode)
+	linkedList.head.value = head
 
 	currentNode := linkedList.head
 	for i := 0; i < len(data); i++ {
-		currentNode.next = &linkedListNode{data[i], nil}
+		currentNode.next = new(linkedListNode)
+		currentNode.next.value = data[i]
 		currentNode = currentNode.next
 	}
 	linkedList.tail = currentNode
@@ -48,7 +50,8 @@ func (ll LinkedList) String() string {
 // Append adds data to the tail of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Append(data int) {
-	newTail := &linkedListNode{data, nil}
+	newTail := new(linkedListNode)
+	newTail.value = data
 	ll.tail.next = newTail
 	ll.tail = newTail
 	ll.length++
@@ -57,7 +60,9 @@ func (ll *LinkedList) Append(data int) {
 // Prepend adds data to the head of *LinkedList.
 // It has time complexity O(1).
 func (ll *LinkedList) Prepend(data int) {
-	newHead := &linkedListNode{data, ll.head}
+	newHead := new(linkedListNode)
+	newHead.value = data
+	newHead.next = ll.head
 	ll.head = newHead
 	ll.length++
 }
@@ -88,7 +93,9 @@ func (ll *LinkedList) Insert(data, index int) error {
 		i++
 	}
 
-	prevNode.next = &linkedListNode{data, currNode}
+	prevNode.next = new(linkedListNode)
+	prevNode.next.value = data
+	prevNode.next.next = currNode
 	ll.length++
 
 	return nil

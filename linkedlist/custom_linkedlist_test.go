@@ -69,3 +69,32 @@ func TestAppend(t *testing.T) {
 		}
 	}
 }
+
+func TestPrepend(t *testing.T) {
+	tests := []struct {
+		ll   *LinkedList
+		data int
+	}{
+		{NewLinkedList(1), 2},
+		{NewLinkedList(-4, -8, 19, 20), 45},
+	}
+
+	for i, test := range tests {
+		oldHead := test.ll.head
+		oldLen := test.ll.length
+
+		test.ll.Prepend(test.data)
+
+		if oldHead != test.ll.head.next {
+			t.Fatalf("test %d: want new head next to equal old head, got next=%v and head=%v", i, test.ll.head.next, oldHead)
+		}
+
+		if test.ll.head.value != test.data {
+			t.Fatalf("test %d: want head %d, got %d", i, test.data, test.ll.head.value)
+		}
+
+		if oldLen+1 != test.ll.length {
+			t.Fatalf("test %d: want length %d, got %d", i, oldLen+1, test.ll.length)
+		}
+	}
+}

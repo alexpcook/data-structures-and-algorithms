@@ -53,3 +53,11 @@ func (ll *LinkedList) Append(data int) {
 	ll.tail = newTail
 	ll.length++
 }
+
+// Prepend adds data to the head of *LinkedList.
+// It has time complexity O(1).
+func (ll *LinkedList) Prepend(data int) {
+	newHead := &linkedListNode{data, ll.head}
+	ll.head = newHead
+	ll.length++
+}

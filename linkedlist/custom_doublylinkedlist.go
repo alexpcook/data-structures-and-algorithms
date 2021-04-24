@@ -67,3 +67,30 @@ func (dll *DoublyLinkedList) Prepend(data int) {
 	dll.head = newHead
 	dll.length++
 }
+
+func (dll *DoublyLinkedList) get_node(index int) *doublynode {
+	if index < 0 || index > dll.length-1 {
+		return nil
+	}
+
+	var node *doublynode
+
+	indexIsInFirstHalf := dll.length/2 > index
+	if indexIsInFirstHalf {
+		node = dll.head
+		i := 0
+		for i != index {
+			node = node.next
+			i++
+		}
+	} else {
+		node = dll.tail
+		i := dll.length - 1
+		for i != index {
+			node = node.previous
+			i--
+		}
+	}
+
+	return node
+}

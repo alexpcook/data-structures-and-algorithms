@@ -79,3 +79,33 @@ func TestDoublyPrepend(t *testing.T) {
 		}
 	}
 }
+
+func TestDoublyLookup(t *testing.T) {
+	tests := []struct {
+		dll         *DoublyLinkedList
+		index, want int
+		isError     bool
+	}{
+		{NewDoublyLinkedList(1, 2, 3), -1, 0, true},
+		{NewDoublyLinkedList(1, 2, 3), 3, 0, true},
+		{NewDoublyLinkedList(1, 2, 3), 0, 1, false},
+		{NewDoublyLinkedList(1, 2, 3), 1, 2, false},
+		{NewDoublyLinkedList(1, 2, 3), 2, 3, false},
+		{NewDoublyLinkedList(10), 0, 10, false},
+	}
+
+	for i, test := range tests {
+		got, err := test.dll.Lookup(test.index)
+
+		if test.isError {
+			if err == nil {
+				t.Fatalf("test %d: want error, got nil", i)
+			}
+			continue
+		}
+
+		if got != test.want {
+			t.Fatalf("test %d: want %d, got %d", i, test.want, got)
+		}
+	}
+}

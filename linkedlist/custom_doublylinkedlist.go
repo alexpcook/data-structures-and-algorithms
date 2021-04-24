@@ -68,6 +68,15 @@ func (dll *DoublyLinkedList) Prepend(data int) {
 	dll.length++
 }
 
+// Lookup returns the value at the specified index in *DoublyLinkedList.
+// It has time complexity O(n/2).
+func (dll *DoublyLinkedList) Lookup(index int) (int, error) {
+	if index < 0 || index > dll.length-1 {
+		return 0, fmt.Errorf("invalid index value %d", index)
+	}
+	return dll.get_node(index).value, nil
+}
+
 func (dll *DoublyLinkedList) get_node(index int) *doublynode {
 	if index < 0 || index > dll.length-1 {
 		return nil
@@ -75,6 +84,8 @@ func (dll *DoublyLinkedList) get_node(index int) *doublynode {
 
 	var node *doublynode
 
+	// This halves the time complexity of lookup, insert, and delete for
+	// doubly-linked lists compared to singly-linked lists
 	indexIsInFirstHalf := dll.length/2 > index
 	if indexIsInFirstHalf {
 		node = dll.head

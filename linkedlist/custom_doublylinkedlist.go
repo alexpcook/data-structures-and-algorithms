@@ -68,6 +68,29 @@ func (dll *DoublyLinkedList) Prepend(data int) {
 	dll.length++
 }
 
+// Insert adds data to *DoublyLinkedList at position index.
+// It has time complexity O(n/2).
+func (dll *DoublyLinkedList) Insert(data, index int) error {
+	if index < 0 || index > dll.length {
+		return fmt.Errorf("invalid index value %d", index)
+	}
+
+	prevNode := dll.get_node(index - 1)
+
+	if prevNode == nil {
+		dll.Prepend(data)
+	} else if prevNode.next == nil {
+		dll.Append(data)
+	} else {
+		nextNode := prevNode.next
+		prevNode.next = new_doublynode(data, nextNode, prevNode)
+		nextNode.previous = prevNode.next
+		dll.length++
+	}
+
+	return nil
+}
+
 // Lookup returns the value at the specified index in *DoublyLinkedList.
 // It has time complexity O(n/2).
 func (dll *DoublyLinkedList) Lookup(index int) (int, error) {

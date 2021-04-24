@@ -80,6 +80,39 @@ func TestDoublyPrepend(t *testing.T) {
 	}
 }
 
+func TestDoublyInsert(t *testing.T) {
+	tests := []struct {
+		dll     *DoublyLinkedList
+		data    int
+		index   int
+		isError bool
+		want    *DoublyLinkedList
+	}{
+		{NewDoublyLinkedList(3), 4, 0, false, NewDoublyLinkedList(4, 3)},
+		{NewDoublyLinkedList(3), 4, 1, false, NewDoublyLinkedList(3, 4)},
+		{NewDoublyLinkedList(3), 4, -1, true, nil},
+		{NewDoublyLinkedList(3), 4, 2, true, nil},
+		{NewDoublyLinkedList(4, 7, 1, -4), 5, 0, false, NewDoublyLinkedList(5, 4, 7, 1, -4)},
+		{NewDoublyLinkedList(4, 7, 1, -4), 5, 4, false, NewDoublyLinkedList(4, 7, 1, -4, 5)},
+		{NewDoublyLinkedList(4, 7, 1, -4), 5, 2, false, NewDoublyLinkedList(4, 7, 5, 1, -4)},
+	}
+
+	for i, test := range tests {
+		err := test.dll.Insert(test.data, test.index)
+
+		if test.isError {
+			if err == nil {
+				t.Fatalf("test %d: want error, got nil", i)
+			}
+			continue
+		}
+
+		if !reflect.DeepEqual(test.dll, test.want) {
+			t.Fatalf("test %d: want %#v, got %#v", i, test.want, test.dll)
+		}
+	}
+}
+
 func TestDoublyLookup(t *testing.T) {
 	tests := []struct {
 		dll         *DoublyLinkedList

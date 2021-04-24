@@ -116,6 +116,15 @@ func (ll *LinkedList) Delete(index int) error {
 	return nil
 }
 
+// Lookup returns the value at the specified index in *LinkedList.
+// It has time complexity O(n).
+func (ll *LinkedList) Lookup(index int) (int, error) {
+	if index < 0 || index > ll.length-1 {
+		return 0, fmt.Errorf("invalid index value %d", index)
+	}
+	return ll.get_node(index).value, nil
+}
+
 func (ll *LinkedList) get_node(index int) *node {
 	if index < 0 || index > ll.length-1 {
 		return nil

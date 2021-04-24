@@ -193,3 +193,21 @@ func TestLookup(t *testing.T) {
 		}
 	}
 }
+
+func TestReverse(t *testing.T) {
+	tests := []struct {
+		ll   *LinkedList
+		want *LinkedList
+	}{
+		{NewLinkedList(3, 4, 5), NewLinkedList(5, 4, 3)},
+		{NewLinkedList(3), NewLinkedList(3)},
+		{NewLinkedList(9, 3, 6, -1), NewLinkedList(-1, 6, 3, 9)},
+	}
+
+	for i, test := range tests {
+		test.ll.Reverse()
+		if !reflect.DeepEqual(test.ll, test.want) {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, test.ll)
+		}
+	}
+}

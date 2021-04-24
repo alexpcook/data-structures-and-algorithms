@@ -139,3 +139,21 @@ func (ll *LinkedList) get_node(index int) *node {
 
 	return node
 }
+
+// Reverse switches the order of the linked list. It modifies the pointer receiver.
+// It has time and space complexity O(n).
+func (ll *LinkedList) Reverse() {
+	entries := make([]int, 0, ll.length)
+	currentNode := ll.head
+	for currentNode != nil { // Time complexity O(n)
+		entries = append(entries, currentNode.value) // Space complexity O(n)
+		currentNode = currentNode.next
+	}
+
+	llNew := NewLinkedList(entries[ll.length-1])
+	for i := ll.length - 2; i > -1; i-- { // Time complexity O(n)
+		llNew.Append(entries[i])
+	}
+
+	*ll = *llNew
+}

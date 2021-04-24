@@ -49,3 +49,21 @@ func (dll DoublyLinkedList) String() string {
 
 	return str
 }
+
+// Append adds data to the tail of *DoublyLinkedList.
+// It has time complexity O(1).
+func (dll *DoublyLinkedList) Append(data int) {
+	newTail := new_doublynode(data, nil, dll.tail)
+	dll.tail.next = newTail
+	dll.tail = newTail
+	dll.length++
+}
+
+// Prepend adds data to the head of *DoublyLinkedList.
+// It has time complexity O(1).
+func (dll *DoublyLinkedList) Prepend(data int) {
+	newHead := new_doublynode(data, dll.head, nil)
+	dll.head.previous = newHead
+	dll.head = newHead
+	dll.length++
+}

@@ -2,6 +2,7 @@ package linkedlist
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -41,4 +42,40 @@ func TestNewDoublyLinkedList(t *testing.T) {
 	}
 
 	fmt.Println(dll)
+}
+
+func TestDoublyAppend(t *testing.T) {
+	tests := []struct {
+		dll  *DoublyLinkedList
+		data int
+		want *DoublyLinkedList
+	}{
+		{NewDoublyLinkedList(1), 2, NewDoublyLinkedList(1, 2)},
+		{NewDoublyLinkedList(-4, -8, 19, 20), 45, NewDoublyLinkedList(-4, -8, 19, 20, 45)},
+	}
+
+	for i, test := range tests {
+		test.dll.Append(test.data)
+		if !reflect.DeepEqual(test.dll, test.want) {
+			t.Fatalf("test %d: want %#v, got %#v", i, test.want, test.dll)
+		}
+	}
+}
+
+func TestDoublyPrepend(t *testing.T) {
+	tests := []struct {
+		dll  *DoublyLinkedList
+		data int
+		want *DoublyLinkedList
+	}{
+		{NewDoublyLinkedList(1), 2, NewDoublyLinkedList(2, 1)},
+		{NewDoublyLinkedList(-4, -8, 19, 20), 45, NewDoublyLinkedList(45, -4, -8, 19, 20)},
+	}
+
+	for i, test := range tests {
+		test.dll.Prepend(test.data)
+		if !reflect.DeepEqual(test.dll, test.want) {
+			t.Fatalf("test %d: want %#v, got %#v", i, test.want, test.dll)
+		}
+	}
 }

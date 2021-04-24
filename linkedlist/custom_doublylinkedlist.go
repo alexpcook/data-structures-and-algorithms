@@ -91,6 +91,39 @@ func (dll *DoublyLinkedList) Insert(data, index int) error {
 	return nil
 }
 
+// Delete removes the specified index from *DoublyLinkedList.
+// It has time complexity O(n/2).
+func (dll *DoublyLinkedList) Delete(index int) error {
+	if index < 0 || index > dll.length-1 {
+		return fmt.Errorf("invalid index value %d", index)
+	}
+
+	if dll.length == 1 {
+		return fmt.Errorf("cannot delete when only one value remains")
+	}
+
+	prevNode := dll.get_node(index - 1)
+
+	if prevNode == nil {
+		dll.head = dll.head.next
+		dll.head.previous = nil
+	} else {
+		prevNode.next = prevNode.next.next
+		if prevNode.next != nil {
+			prevNode.next.previous = prevNode
+		}
+	}
+
+	dll.length--
+	if dll.length == 1 {
+		dll.tail = dll.head
+	} else if dll.length == index {
+		dll.tail = prevNode
+	}
+
+	return nil
+}
+
 // Lookup returns the value at the specified index in *DoublyLinkedList.
 // It has time complexity O(n/2).
 func (dll *DoublyLinkedList) Lookup(index int) (int, error) {

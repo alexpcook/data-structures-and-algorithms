@@ -113,6 +113,39 @@ func TestDoublyInsert(t *testing.T) {
 	}
 }
 
+func TestDoublyDelete(t *testing.T) {
+	tests := []struct {
+		ll      *DoublyLinkedList
+		index   int
+		isError bool
+		want    *DoublyLinkedList
+	}{
+		{NewDoublyLinkedList(3), 0, true, nil},
+		{NewDoublyLinkedList(3, 4), -1, true, nil},
+		{NewDoublyLinkedList(3, 4), 2, true, nil},
+		{NewDoublyLinkedList(3, 4), 0, false, NewDoublyLinkedList(4)},
+		{NewDoublyLinkedList(3, 4), 1, false, NewDoublyLinkedList(3)},
+		{NewDoublyLinkedList(3, 4, 5), 1, false, NewDoublyLinkedList(3, 5)},
+		{NewDoublyLinkedList(3, 4, 5, 6), 3, false, NewDoublyLinkedList(3, 4, 5)},
+		{NewDoublyLinkedList(3, 4, 5, 6), 2, false, NewDoublyLinkedList(3, 4, 6)},
+	}
+
+	for i, test := range tests {
+		err := test.ll.Delete(test.index)
+
+		if test.isError {
+			if err == nil {
+				t.Fatalf("test %d: want error, got nil", i)
+			}
+			continue
+		}
+
+		if !reflect.DeepEqual(test.ll, test.want) {
+			t.Fatalf("test %d: want %#v, got %#v", i, test.want, test.ll)
+		}
+	}
+}
+
 func TestDoublyLookup(t *testing.T) {
 	tests := []struct {
 		dll         *DoublyLinkedList

@@ -62,32 +62,25 @@ func (val BSTValueNotExistsError) Error() string {
 // It returns a non-nil error if the value is already present.
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
 func (bst *BinarySearchTree) Insert(value int) error {
-	currentNode := bst.root
+	var parentNode **node
 	height := 1
 
-NodeTraversal:
+	currentNode := bst.root
 	for currentNode != nil {
-		nodeValue := currentNode.value
-		switch {
+		switch nodeValue := currentNode.value; {
 		case value < nodeValue:
-			height++
-			if currentNode.left == nil {
-				currentNode.left = &node{value, nil, nil}
-				break NodeTraversal
-			}
+			parentNode = &currentNode.left
 			currentNode = currentNode.left
 		case value > nodeValue:
-			height++
-			if currentNode.right == nil {
-				currentNode.right = &node{value, nil, nil}
-				break NodeTraversal
-			}
+			parentNode = &currentNode.right
 			currentNode = currentNode.right
 		default:
 			return BSTValueExistsError(value)
 		}
+		height++
 	}
 
+	*parentNode = &node{value, nil, nil}
 	if height > bst.height {
 		bst.height = height
 	}

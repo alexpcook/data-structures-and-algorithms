@@ -26,6 +26,12 @@ func TestStack1Peek(t *testing.T) {
 	if val != "call2" {
 		t.Fatalf("want %q, got %q", "call2", val)
 	}
+	if s.top.value != "call2" {
+		t.Fatalf("want stack top value %q, got %q", "call2", s.top.value)
+	}
+	if s.bottom.value != "call1" {
+		t.Fatalf("want stack bottom value %q, got %q", "call1", s.bottom.value)
+	}
 }
 
 func TestStack1Push(t *testing.T) {
@@ -48,6 +54,42 @@ func TestStack1Push(t *testing.T) {
 }
 
 func TestStack1Pop(t *testing.T) {
+	s := new(Stack1)
+	val, err := s.Pop()
+	if !errors.Is(err, StackIsEmptyError{}) {
+		t.Fatalf("want StackIsEmptyError, got %v", err)
+	}
+	if val != "" {
+		t.Fatalf("want %q, got %q", "", val)
+	}
+
+	s.Push("call1")
+	s.Push("call2")
+
+	val, err = s.Pop()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call2" {
+		t.Fatalf("want %q, got %q", "call2", val)
+	}
+	if s.top.value != "call1" {
+		t.Fatalf("want stack top value %q, got %q", "call1", s.top.value)
+	}
+	if s.bottom.value != "call1" {
+		t.Fatalf("want stack bottom value %q, got %q", "call1", s.bottom.value)
+	}
+
+	val, err = s.Pop()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call1" {
+		t.Fatalf("want %q, got %q", "call1", val)
+	}
+	if s.top != nil || s.bottom != nil {
+		t.Fatalf("want nil stack top and bottom, got top=%#v and bottom=%#v", s.top, s.bottom)
+	}
 }
 
 func TestStack1String(t *testing.T) {

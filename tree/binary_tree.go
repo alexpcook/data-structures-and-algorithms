@@ -139,13 +139,13 @@ func (bst *BinarySearchTree) Delete(value int) error {
 		default:
 			hasLeftChild := currentNode.left != nil
 			hasRightChild := currentNode.right != nil
-			if !hasLeftChild && !hasRightChild { // is leaf
-				*parentNode = nil
+			if hasLeftChild && hasRightChild { // has two children
 			} else if hasLeftChild { // has one child, case 1
 				*parentNode = currentNode.left
 			} else if hasRightChild { // has one child, case 2
 				*parentNode = currentNode.right
-			} else { // replace with smallest value greater than current node
+			} else { // is leaf
+				*parentNode = nil
 			}
 			return nil
 		}

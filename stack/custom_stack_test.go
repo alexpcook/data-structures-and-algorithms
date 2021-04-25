@@ -152,7 +152,40 @@ func TestStack2Push(t *testing.T) {
 }
 
 func TestStack2Pop(t *testing.T) {
+	s := new(Stack2)
+	val, err := s.Pop()
+	if !errors.Is(err, StackIsEmptyError{}) {
+		t.Fatalf("want StackIsEmptyError, got %v", err)
+	}
+	if val != "" {
+		t.Fatalf("want %q, got %q", "", val)
+	}
 
+	s.Push("call1")
+	s.Push("call2")
+
+	val, err = s.Pop()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call2" {
+		t.Fatalf("want %q, got %q", "call2", val)
+	}
+	if want := []string{"call1"}; !reflect.DeepEqual(want, s.data) {
+		t.Fatalf("want %v, got %v", want, s.data)
+	}
+
+	val, err = s.Pop()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call1" {
+		t.Fatalf("want %q, got %q", "call1", val)
+	}
+	var want []string = nil
+	if !reflect.DeepEqual(want, s.data) {
+		t.Fatalf("want %v, got %v", want, s.data)
+	}
 }
 
 func TestStack2String(t *testing.T) {

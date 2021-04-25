@@ -105,3 +105,21 @@ func TestStack1String(t *testing.T) {
 	s.Push("call1")
 	fmt.Print(s)
 }
+
+func TestStack2Peek(t *testing.T) {
+
+}
+
+func TestStack2Push(t *testing.T) {
+
+}
+
+func TestStack2Pop(t *testing.T) {
+
+}
+
+func TestStack2String(t *testing.T) {
+	s := new(Stack2)
+	s.Push("call1")
+	fmt.Print(s)
+}

@@ -58,6 +58,15 @@ func (val BSTValueNotExistsError) Error() string {
 	return fmt.Sprintf("%d does not exist in binary search tree", val)
 }
 
+// BSTDeleteRootNodeError represents an error when only the root node
+// exists and is attempted to be removed from a BST.
+type BSTDeleteRootNodeError int
+
+// Error implements the error interface for BSTDeleteRootNodeError
+func (val BSTDeleteRootNodeError) Error() string {
+	return fmt.Sprintf("only root node %d exists, so it cannot be removed", val)
+}
+
 // Insert adds the given value to the BST.
 // It returns a non-nil error if the value is already present.
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
@@ -108,10 +117,40 @@ func (bst *BinarySearchTree) Lookup(value int) error {
 }
 
 // Delete removes the given value from the BST.
-// It returns a non-nil error if the value is not present.
+// It returns a non-nil error if the value is not present,
+// or if only the root node exists and is attempted to be deleted.
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
 func (bst *BinarySearchTree) Delete(value int) error {
-	return nil
+	if value == bst.root.value && bst.root.left == nil && bst.root.right == nil {
+		return BSTDeleteRootNodeError(bst.root.value)
+	}
+
+	var parentNode **node
+
+	currentNode := bst.root
+	for currentNode != nil {
+		switch nodeValue := currentNode.value; {
+		case value < nodeValue:
+			parentNode = &currentNode.left
+			currentNode = currentNode.left
+		case value > nodeValue:
+			parentNode = &currentNode.right
+			currentNode = currentNode.right
+		default:
+			hasLeftChild := currentNode.left != nil
+			hasRightChild := currentNode.right != nil
+			if !hasLeftChild && !hasRightChild { // is leaf
+				*parentNode = nil
+			} else if hasLeftChild { // has one child, case 1
+				*parentNode = currentNode.left
+			} else if hasRightChild { // has one child, case 2
+				*parentNode = currentNode.right
+			} else { // replace with smallest value greater than current node
+			}
+		}
+	}
+
+	return BSTValueNotExistsError(value)
 }
 
 // Height returns the depth of the BST.

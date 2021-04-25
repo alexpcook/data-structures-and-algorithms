@@ -195,6 +195,36 @@ func TestBinarySearchTreeDelete(t *testing.T) {
 	case bst.root.right != nil:
 		t.Fatalf("want bst root right == %v, got bst root right == %v", nil, bst.root.right)
 	}
+
+	if err := bst.Insert(5); err != nil {
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	}
+
+	switch err := bst.Delete(7); {
+	case err != nil:
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	case bst.root.value != 5:
+		t.Fatalf("want root value == %d, got root value == %d", 5, bst.root.value)
+	case bst.root.left != nil:
+		t.Fatalf("want bst root left == %v, got bst root left == %v", nil, bst.root.left)
+	case bst.root.right != nil:
+		t.Fatalf("want bst root right == %v, got bst root right == %v", nil, bst.root.right)
+	}
+
+	if err := bst.Insert(7); err != nil {
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	}
+
+	switch err := bst.Delete(5); {
+	case err != nil:
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	case bst.root.value != 7:
+		t.Fatalf("want root value == %d, got root value == %d", 7, bst.root.value)
+	case bst.root.left != nil:
+		t.Fatalf("want bst root left == %v, got bst root left == %v", nil, bst.root.left)
+	case bst.root.right != nil:
+		t.Fatalf("want bst root right == %v, got bst root right == %v", nil, bst.root.right)
+	}
 }
 
 func TestBinarySearchTreeHeight(t *testing.T) {

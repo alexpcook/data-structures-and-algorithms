@@ -125,7 +125,7 @@ func (bst *BinarySearchTree) Delete(value int) error {
 		return BSTDeleteRootNodeError(bst.root.value)
 	}
 
-	var parentNode **node
+	var parentNode **node = &bst.root
 
 	currentNode := bst.root
 	for currentNode != nil {

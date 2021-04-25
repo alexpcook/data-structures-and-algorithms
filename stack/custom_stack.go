@@ -68,3 +68,57 @@ func (s1 *Stack1) Pop() (string, error) {
 
 	return poppedValue, nil
 }
+
+// Stack2 implements a stack data structure using slices.
+// Use new(stack.Stack2) to create a new instance.
+type Stack2 struct {
+	data   []string
+	length int
+}
+
+func (s2 *Stack2) String() string {
+	str := ""
+
+	for i := s2.length - 1; i > -1; i-- {
+		str += fmt.Sprintln(s2.data[i])
+	}
+
+	return str
+}
+
+// Peek gets the top entry of the stack. It returns a non-nil error if the stack is empty.
+// It has time complexity O(1).
+func (s2 *Stack2) Peek() (string, error) {
+	if s2.data == nil {
+		return "", StackIsEmptyError{}
+	}
+	return s2.data[s2.length-1], nil
+}
+
+// Push adds an entry to the top of the stack.
+// It has time complexity O(1).
+func (s2 *Stack2) Push(entry string) {
+	if s2.data == nil {
+		s2.data = make([]string, 0, 2) // Account for future growth with double the needed capacity
+	}
+	s2.data = append(s2.data, entry)
+	s2.length++
+}
+
+// Pop removes the entry at the top of the stack and returns it. It returns a non-nil error if the stack is empty.
+// It has time complexity O(1).
+func (s2 *Stack2) Pop() (string, error) {
+	if s2.data == nil {
+		return "", StackIsEmptyError{}
+	}
+
+	poppedValue := s2.data[s2.length-1]
+	if s2.length == 1 {
+		s2.data = nil
+	} else {
+		s2.data = s2.data[:s2.length-1]
+	}
+	s2.length--
+
+	return poppedValue, nil
+}

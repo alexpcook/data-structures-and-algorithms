@@ -1,5 +1,7 @@
 package tree
 
+import "fmt"
+
 // Binary search tree (assuming it's balanced)
 // - Lookup O(log(n))
 // - Insert O(log(n))
@@ -38,10 +40,46 @@ func NewBinarySearchTree(rootValue int) *BinarySearchTree {
 	}
 }
 
-// Insert adds the given value to the BST.
-// It has time complexity O(log(n)) in the average case and O(n) in the worst case.
-func (bst *BinarySearchTree) Insert(value int) {
+type BSTValueExistsError int
 
+func (val BSTValueExistsError) Error() string {
+	return fmt.Sprintf("%d already exists in binary search tree", val)
+}
+
+// Insert adds the given value to the BST.
+// It returns a non-nil error if the value is already present.
+// It has time complexity O(log(n)) in the average case and O(n) in the worst case.
+func (bst *BinarySearchTree) Insert(value int) error {
+	currentNode := bst.root
+	height := 1
+
+NodeTraversal:
+	for currentNode != nil {
+		nodeValue := currentNode.value
+		switch {
+		case value < nodeValue:
+			if currentNode.left == nil {
+				currentNode.left = &node{value, nil, nil}
+				break NodeTraversal
+			}
+			currentNode = currentNode.left
+		case value > nodeValue:
+			if currentNode.right == nil {
+				currentNode.right = &node{value, nil, nil}
+				break NodeTraversal
+			}
+			currentNode = currentNode.right
+		default:
+			return BSTValueExistsError(value)
+		}
+		height++
+	}
+
+	if height > bst.height {
+		bst.height = height
+	}
+
+	return nil
 }
 
 // Lookup determines whether the given value is in the BST.

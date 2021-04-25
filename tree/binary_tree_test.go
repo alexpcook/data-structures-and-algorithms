@@ -154,7 +154,17 @@ func TestBinarySearchTreeLookup(t *testing.T) {
 }
 
 func TestBinarySearchTreeDelete(t *testing.T) {
-	// TODO: implement
+	bst := NewBinarySearchTree(7)
+
+	rootNodeErr := BSTDeleteRootNodeError(7)
+	if err := bst.Delete(7); !errors.Is(err, rootNodeErr) {
+		t.Fatalf("want error == %v, got error == %v", rootNodeErr, err)
+	}
+
+	notExistsErr := BSTValueNotExistsError(8)
+	if err := bst.Delete(8); !errors.Is(err, notExistsErr) {
+		t.Fatalf("want error == %v, got error == %v", notExistsErr, err)
+	}
 }
 
 func TestBinarySearchTreeHeight(t *testing.T) {

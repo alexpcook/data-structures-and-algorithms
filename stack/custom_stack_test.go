@@ -3,6 +3,7 @@ package stack
 import (
 	"errors"
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -107,7 +108,28 @@ func TestStack1String(t *testing.T) {
 }
 
 func TestStack2Peek(t *testing.T) {
+	s := new(Stack2)
+	val, err := s.Peek()
+	if !errors.Is(err, StackIsEmptyError{}) {
+		t.Fatalf("want StackIsEmptyError, got %v", err)
+	}
+	if val != "" {
+		t.Fatalf("want %q, got %q", "", val)
+	}
 
+	s.Push("call1")
+	s.Push("call2")
+
+	val, err = s.Peek()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call2" {
+		t.Fatalf("want %q, got %q", "call2", val)
+	}
+	if want := []string{"call1", "call2"}; !reflect.DeepEqual(want, s.data) {
+		t.Fatalf("want %v, got %v", want, s.data)
+	}
 }
 
 func TestStack2Push(t *testing.T) {

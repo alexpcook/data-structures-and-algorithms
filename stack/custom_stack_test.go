@@ -6,6 +6,14 @@ import (
 	"testing"
 )
 
+func TestStackIsEmptyError(t *testing.T) {
+	err := StackIsEmptyError{}
+	val := fmt.Sprint(err)
+	if val != "stack is empty" {
+		t.Fatalf("want %q, got %q", "stack is empty", val)
+	}
+}
+
 func TestStack1Peek(t *testing.T) {
 	s := new(Stack1)
 	val, err := s.Peek()

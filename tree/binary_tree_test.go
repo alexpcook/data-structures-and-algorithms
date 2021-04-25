@@ -165,6 +165,20 @@ func TestBinarySearchTreeDelete(t *testing.T) {
 	if err := bst.Delete(8); !errors.Is(err, notExistsErr) {
 		t.Fatalf("want error == %v, got error == %v", notExistsErr, err)
 	}
+
+	if err := bst.Insert(9); err != nil {
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	}
+
+	if err := bst.Delete(9); err != nil {
+		t.Fatalf("want error == %v, got error == %v", nil, err)
+	} else if bst.root.value != 7 {
+		t.Fatalf("want root value == %d, got root value == %d", 7, bst.root.value)
+	} else if bst.root.left != nil {
+		t.Fatalf("want bst root left == %v, got bst root left == %v", nil, bst.root.left)
+	} else if bst.root.right != nil {
+		t.Fatalf("want bst root right == %v, got bst root right == %v", nil, bst.root.right)
+	}
 }
 
 func TestBinarySearchTreeHeight(t *testing.T) {

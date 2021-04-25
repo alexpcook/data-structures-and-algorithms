@@ -147,6 +147,7 @@ func (bst *BinarySearchTree) Delete(value int) error {
 				*parentNode = currentNode.right
 			} else { // replace with smallest value greater than current node
 			}
+			return nil
 		}
 	}
 

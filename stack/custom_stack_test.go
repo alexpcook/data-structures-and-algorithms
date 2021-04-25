@@ -1,11 +1,31 @@
 package stack
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 )
 
 func TestStack1Peek(t *testing.T) {
+	s := new(Stack1)
+	val, err := s.Peek()
+	if !errors.Is(err, StackIsEmptyError{}) {
+		t.Fatalf("want StackIsEmptyError, got %v", err)
+	}
+	if val != "" {
+		t.Fatalf("want %q, got %q", "", val)
+	}
+
+	s.Push("call1")
+	s.Push("call2")
+
+	val, err = s.Peek()
+	if err != nil {
+		t.Fatalf("want nil error, got %v", err)
+	}
+	if val != "call2" {
+		t.Fatalf("want %q, got %q", "call2", val)
+	}
 }
 
 func TestStack1Push(t *testing.T) {

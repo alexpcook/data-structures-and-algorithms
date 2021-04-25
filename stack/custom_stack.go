@@ -46,10 +46,10 @@ func (s1 *Stack1) Peek() (string, error) {
 // It has time complexity O(1).
 func (s1 *Stack1) Push(entry string) {
 	s1.top = &node{entry, s1.top}
-	s1.length++
-	if s1.length == 1 {
+	if s1.length == 0 {
 		s1.bottom = s1.top
 	}
+	s1.length++
 }
 
 // Pop removes the entry at the top of the stack and returns it. It returns a non-nil error if the stack is empty.
@@ -61,10 +61,10 @@ func (s1 *Stack1) Pop() (string, error) {
 
 	poppedValue := s1.top.value
 	s1.top = s1.top.next
-	s1.length--
-	if s1.length == 0 {
+	if s1.length == 1 {
 		s1.bottom = nil
 	}
+	s1.length--
 
 	return poppedValue, nil
 }

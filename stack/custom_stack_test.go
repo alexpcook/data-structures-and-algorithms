@@ -133,7 +133,22 @@ func TestStack2Peek(t *testing.T) {
 }
 
 func TestStack2Push(t *testing.T) {
+	s := new(Stack2)
+	s.Push("call1")
+	if sDepth := s.length; sDepth != 1 {
+		t.Fatalf("want stack depth 1, got %d", sDepth)
+	}
+	if want := []string{"call1"}; !reflect.DeepEqual(want, s.data) {
+		t.Fatalf("want %v, got %v", want, s.data)
+	}
 
+	s.Push("call2")
+	if sDepth := s.length; sDepth != 2 {
+		t.Fatalf("want stack depth 2, got %d", sDepth)
+	}
+	if want := []string{"call1", "call2"}; !reflect.DeepEqual(want, s.data) {
+		t.Fatalf("want %v, got %v", want, s.data)
+	}
 }
 
 func TestStack2Pop(t *testing.T) {

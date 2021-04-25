@@ -51,6 +51,20 @@ func TestBSTValueNotExistsError(t *testing.T) {
 	}
 }
 
+func TestBSTDeleteRootNodeError(t *testing.T) {
+	var err BSTDeleteRootNodeError
+	want := "only root node 0 exists, so it cannot be removed"
+	if msg := err.Error(); msg != want {
+		t.Fatalf("want error string == %s, got error string == %s", want, msg)
+	}
+
+	err = BSTDeleteRootNodeError(8)
+	want = "only root node 8 exists, so it cannot be removed"
+	if msg := err.Error(); msg != want {
+		t.Fatalf("want error string == %s, got error string == %s", want, msg)
+	}
+}
+
 func TestBinarySearchTreeInsert(t *testing.T) {
 	root := 7
 	bst := NewBinarySearchTree(root)

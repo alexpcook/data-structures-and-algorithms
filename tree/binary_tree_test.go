@@ -37,6 +37,20 @@ func TestBSTValueExistsError(t *testing.T) {
 	}
 }
 
+func TestBSTValueNotExistsError(t *testing.T) {
+	var err BSTValueNotExistsError
+	want := "0 does not exist in binary search tree"
+	if msg := err.Error(); msg != want {
+		t.Fatalf("want error string == %s, got error string == %s", want, msg)
+	}
+
+	err = BSTValueNotExistsError(8)
+	want = "8 does not exist in binary search tree"
+	if msg := err.Error(); msg != want {
+		t.Fatalf("want error string == %s, got error string == %s", want, msg)
+	}
+}
+
 func TestBinarySearchTreeInsert(t *testing.T) {
 	root := 7
 	bst := NewBinarySearchTree(root)
@@ -114,6 +128,33 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if height := bst.Height(); height != 3 {
 		t.Fatalf("want bst height == %d, got bst height == %d", 3, height)
 	}
+}
+
+func TestBinarySearchTreeLookup(t *testing.T) {
+	bst := NewBinarySearchTree(0)
+
+	data := []int{5, 9, 13, 3, 5, 1}
+	for _, d := range data {
+		bst.Insert(d)
+	}
+
+	for _, d := range append(data, 0) {
+		err := bst.Lookup(d)
+		if err != nil {
+			t.Fatalf("want error == %v, got error == %v", nil, err)
+		}
+	}
+
+	for _, d := range []int{7, 18, -4, 2} {
+		err := bst.Lookup(d)
+		if want := BSTValueNotExistsError(d); !errors.Is(err, want) {
+			t.Fatalf("want error == %v, got error == %v", want, err)
+		}
+	}
+}
+
+func TestBinarySearchTreeDelete(t *testing.T) {
+	// TODO: implement
 }
 
 func TestBinarySearchTreeHeight(t *testing.T) {

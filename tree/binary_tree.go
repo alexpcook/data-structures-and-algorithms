@@ -40,10 +40,22 @@ func NewBinarySearchTree(rootValue int) *BinarySearchTree {
 	}
 }
 
+// BSTValueExistsError represents an error when a duplicate value is
+// attempted to be added to a BST.
 type BSTValueExistsError int
 
+// Error implements the error interface for BSTValueExistsError
 func (val BSTValueExistsError) Error() string {
 	return fmt.Sprintf("%d already exists in binary search tree", val)
+}
+
+// BSTValueNotExistsError represents an error when a non-existent value
+// is attempted to be searched for or deleted from a BST.
+type BSTValueNotExistsError int
+
+// Error implements the error interface for BSTValueNotExistsError
+func (val BSTValueNotExistsError) Error() string {
+	return fmt.Sprintf("%d does not exist in binary search tree", val)
 }
 
 // Insert adds the given value to the BST.
@@ -87,7 +99,21 @@ NodeTraversal:
 // It returns a non-nil error if the value is not present.
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
 func (bst *BinarySearchTree) Lookup(value int) error {
-	return nil
+	currentNode := bst.root
+
+	for currentNode != nil {
+		nodeValue := currentNode.value
+		switch {
+		case value < nodeValue:
+			currentNode = currentNode.left
+		case value > nodeValue:
+			currentNode = currentNode.right
+		default:
+			return nil
+		}
+	}
+
+	return BSTValueNotExistsError(value)
 }
 
 // Delete removes the given value from the BST.

@@ -137,14 +137,14 @@ func (bst *BinarySearchTree) Delete(value int) error {
 			parentNode = &currentNode.right
 			currentNode = currentNode.right
 		default:
-			hasLeftChild := currentNode.left != nil
-			hasRightChild := currentNode.right != nil
-			if hasLeftChild && hasRightChild { // has two children
-			} else if hasLeftChild { // has one child, case 1
+			switch hasLeftChild, hasRightChild := currentNode.left != nil, currentNode.right != nil; {
+			case hasLeftChild && hasRightChild:
+				fallthrough // TODO: implement
+			case hasLeftChild:
 				*parentNode = currentNode.left
-			} else if hasRightChild { // has one child, case 2
+			case hasRightChild:
 				*parentNode = currentNode.right
-			} else { // is leaf
+			default:
 				*parentNode = nil
 			}
 			return nil

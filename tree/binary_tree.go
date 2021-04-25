@@ -58,12 +58,14 @@ NodeTraversal:
 		nodeValue := currentNode.value
 		switch {
 		case value < nodeValue:
+			height++
 			if currentNode.left == nil {
 				currentNode.left = &node{value, nil, nil}
 				break NodeTraversal
 			}
 			currentNode = currentNode.left
 		case value > nodeValue:
+			height++
 			if currentNode.right == nil {
 				currentNode.right = &node{value, nil, nil}
 				break NodeTraversal
@@ -72,7 +74,6 @@ NodeTraversal:
 		default:
 			return BSTValueExistsError(value)
 		}
-		height++
 	}
 
 	if height > bst.height {
@@ -94,4 +95,9 @@ func (bst *BinarySearchTree) Lookup(value int) error {
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
 func (bst *BinarySearchTree) Delete(value int) error {
 	return nil
+}
+
+// Height returns the depth of the BST.
+func (bst *BinarySearchTree) Height() int {
+	return bst.height
 }

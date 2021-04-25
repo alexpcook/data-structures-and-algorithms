@@ -52,8 +52,8 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if bst.root.right != nil {
 		t.Fatalf("want bst root right == %v, got bst root right == %v", nil, bst.root.right)
 	}
-	if bst.height != 1 {
-		t.Fatalf("want bst height == %d, got bst height == %d", 1, bst.height)
+	if bst.height != 2 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 2, bst.height)
 	}
 
 	right := 9
@@ -67,8 +67,8 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if wantRight := (&node{right, nil, nil}); *bst.root.right != *wantRight {
 		t.Fatalf("want bst root right == %v, got bst root right == %v", wantRight, bst.root.right)
 	}
-	if bst.height != 1 {
-		t.Fatalf("want bst height == %d, got bst height == %d", 1, bst.height)
+	if bst.height != 2 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 2, bst.height)
 	}
 
 	duplicate := 9
@@ -82,8 +82,8 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if wantRight := (&node{right, nil, nil}); *bst.root.right != *wantRight {
 		t.Fatalf("want bst root right == %v, got bst root right == %v", wantRight, bst.root.right)
 	}
-	if bst.height != 1 {
-		t.Fatalf("want bst height == %d, got bst height == %d", 1, bst.height)
+	if bst.height != 2 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 2, bst.height)
 	}
 
 	err = bst.Insert(root)
@@ -96,8 +96,8 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if wantRight := (&node{right, nil, nil}); *bst.root.right != *wantRight {
 		t.Fatalf("want bst root right == %v, got bst root right == %v", wantRight, bst.root.right)
 	}
-	if bst.height != 1 {
-		t.Fatalf("want bst height == %d, got bst height == %d", 1, bst.height)
+	if bst.height != 2 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 2, bst.height)
 	}
 
 	another := 5
@@ -111,7 +111,24 @@ func TestBinarySearchTreeInsert(t *testing.T) {
 	if wantRight := (&node{right, nil, nil}); *bst.root.right != *wantRight {
 		t.Fatalf("want bst root right == %v, got bst root right == %v", wantRight, bst.root.right)
 	}
-	if bst.height != 2 {
-		t.Fatalf("want bst height == %d, got bst height == %d", 2, bst.height)
+	if bst.height != 3 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 3, bst.height)
 	}
+}
+
+func TestBinarySearchTreeHeight(t *testing.T) {
+	data := []int{1, 2, 3}
+	bst := NewBinarySearchTree(0)
+	if got := bst.Height(); got != 1 {
+		t.Fatalf("want bst height == %d, got bst height == %d", 1, got)
+	}
+
+	for i, d := range data {
+		bst.Insert(d)
+		if got := bst.Height(); got != i+2 {
+			t.Fatalf("want bst height == %d, got bst height == %d", i+2, got)
+		}
+	}
+
+	// TODO: test height after deletion
 }

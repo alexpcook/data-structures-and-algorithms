@@ -93,10 +93,8 @@ func (bst *BinarySearchTree) Insert(value int) error {
 // It has time complexity O(log(n)) in the average case and O(n) in the worst case.
 func (bst *BinarySearchTree) Lookup(value int) error {
 	currentNode := bst.root
-
 	for currentNode != nil {
-		nodeValue := currentNode.value
-		switch {
+		switch nodeValue := currentNode.value; {
 		case value < nodeValue:
 			currentNode = currentNode.left
 		case value > nodeValue:

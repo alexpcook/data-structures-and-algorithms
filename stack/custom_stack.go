@@ -69,6 +69,11 @@ func (s1 *Stack1) Pop() (string, error) {
 	return poppedValue, nil
 }
 
+// Length returns the depth of the stack.
+func (s1 *Stack1) Length() int {
+	return s1.length
+}
+
 // Stack2 implements a stack data structure using slices.
 // Use new(stack.Stack2) to create a new instance.
 type Stack2 struct {
@@ -121,4 +126,9 @@ func (s2 *Stack2) Pop() (string, error) {
 	s2.length--
 
 	return poppedValue, nil
+}
+
+// Length returns the depth of the stack.
+func (s2 *Stack2) Length() int {
+	return s2.length
 }

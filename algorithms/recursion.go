@@ -48,3 +48,18 @@ func FibonacciRecursive(n int) int {
 		return FibonacciRecursive(n-1) + FibonacciRecursive(n-2)
 	}
 }
+
+// ReverseStringRecursive reverses string s using recursion.
+// It has time complexity O(n) and space complexity O(n).
+func ReverseStringRecursive(s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+
+	chars := []rune(s)
+	if len(chars) == 1 {
+		return string(chars[0])
+	}
+
+	return ReverseStringRecursive(string(chars[1:])) + string(chars[0])
+}

@@ -54,3 +54,20 @@ func TestFibonacciRecursive(t *testing.T) {
 		}
 	}
 }
+
+func TestReverseStringRecursive(t *testing.T) {
+	tests := []struct {
+		input, want string
+	}{
+		{"monday", "yadnom"},
+		{"", ""},
+		{"a", "a"},
+		{"abc", "cba"},
+	}
+
+	for _, test := range tests {
+		if got := ReverseStringRecursive(test.input); got != test.want {
+			t.Fatalf("want %s, got %s", test.want, got)
+		}
+	}
+}

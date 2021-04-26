@@ -25,3 +25,26 @@ func FactorialRecursive(n int) int {
 		return n * FactorialRecursive(n-1)
 	}
 }
+
+// FibonacciIterative returns the nth number of the Fibonacci sequence using an iterative approach.
+// It has time complexity O(n) and space complexity O(1).
+func FibonacciIterative(n int) int {
+	current, next := 0, 1
+	for i := 0; i < n-1; i++ {
+		current, next = next, current+next
+	}
+	return current
+}
+
+// FibonacciRecursive returns the nth number of the Fibonacci sequence using a recursive approach.
+// It has time complexity O(n) and space complexity O(n), due to recursion.
+func FibonacciRecursive(n int) int {
+	switch n {
+	case 1:
+		return 0
+	case 2:
+		return 1
+	default:
+		return FibonacciRecursive(n-1) + FibonacciRecursive(n-2)
+	}
+}

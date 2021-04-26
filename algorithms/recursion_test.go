@@ -28,3 +28,29 @@ func TestFactorialRecursive(t *testing.T) {
 		}
 	}
 }
+func fibonacciTests() (input, want []int) {
+	input = []int{1, 2, 3, 4, 5, 6}
+	want = []int{0, 1, 1, 2, 3, 5}
+	if len(input) != len(want) {
+		panic("input and want must be the same length")
+	}
+	return
+}
+
+func TestFibonacciIterative(t *testing.T) {
+	input, want := fibonacciTests()
+	for i := 0; i < len(input); i++ {
+		if got := FibonacciIterative(input[i]); got != want[i] {
+			t.Fatalf("want %d, got %d", want[i], got)
+		}
+	}
+}
+
+func TestFibonacciRecursive(t *testing.T) {
+	input, want := fibonacciTests()
+	for i := 0; i < len(input); i++ {
+		if got := FibonacciRecursive(input[i]); got != want[i] {
+			t.Fatalf("want %d, got %d", want[i], got)
+		}
+	}
+}

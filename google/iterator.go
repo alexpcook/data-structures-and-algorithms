@@ -8,9 +8,13 @@ type Iterator interface {
 	Next() int
 }
 
+type node struct {
+	value int
+	next  *node
+}
+
 type IntIterator struct {
-	data  []int
-	index int
+	head *node
 }
 
 // O(1)
@@ -18,23 +22,27 @@ func NewIntIterator(data []int) (*IntIterator, error) {
 	if len(data) == 0 {
 		return nil, fmt.Errorf("got no data")
 	}
-	return &IntIterator{data, 0}, nil
+	iter := &IntIterator{&node{data[0], nil}}
+	curNode := iter.head
+	for i := 1; i < len(data); i++ {
+		curNode.next = &node{data[i], nil}
+		curNode = curNode.next
+	}
+	return iter, nil
 }
 
 // O(1)
 func (itr *IntIterator) HasNext() bool {
-	return itr.index < len(itr.data)
+	return itr.head != nil
 }
 
 // O(1)
-func (itr *IntIterator) Next() int {
-	if itr.index > len(itr.data)-1 {
-		return 0
+func (itr *IntIterator) Next() (int, error) {
+	if itr.head == nil {
+		return 0, fmt.Errorf("empty iterator")
 	}
-	defer func() {
-		itr.index++
-	}()
-	return itr.data[itr.index]
+	defer func() { itr.head = itr.head.next }()
+	return itr.head.value, nil
 }
 
 type IntInterleaver struct {
@@ -61,7 +69,7 @@ func (itl *IntInterleaver) HasNext() bool {
 }
 
 // O(itl.data)
-func (itl *IntInterleaver) Next() int {
+func (itl *IntInterleaver) Next() (int, error) {
 	for j := 0; j < len(itl.data); itl.index, j = (itl.index+1)%len(itl.data), j+1 {
 		if itl.data[itl.index].HasNext() {
 			defer func() {
@@ -71,5 +79,5 @@ func (itl *IntInterleaver) Next() int {
 			return itl.data[itl.index].Next()
 		}
 	}
-	return 0
+	return 0, nil
 }

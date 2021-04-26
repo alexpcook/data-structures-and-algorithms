@@ -1,37 +1,49 @@
 package google
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestIntInterleaver(t *testing.T) {
-	slc1 := []int{1, 2, 3}
-	slc2 := []int{4, 5}
-	slc3 := []int{6, 7, 8, 9}
+func TestIntIterator(t *testing.T) {
+	data := []int{}
+	_, err := NewIntIterator(data)
+	if err == nil {
+		t.Fatal("want error, got nil")
+	}
 
-	iter1, err := NewIntIterator(slc1)
+	data = []int{1}
+	itr, err := NewIntIterator(data)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	iter2, err := NewIntIterator(slc2)
-	if err != nil {
-		t.Fatal(err)
-	}
-	iter3, err := NewIntIterator(slc3)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	interleaver, err := NewIntInterleaver(*iter1, *iter2, *iter3)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	want := []int{1, 4, 6, 2, 5, 7, 3, 8, 9}
-	i := 0
-	for interleaver.HasNext() {
-		if got := interleaver.Next(); got != want[i] {
-			t.Fatalf("want %d, got %d", want[i], got)
+	for i := 0; itr.HasNext(); i++ {
+		got, err := itr.Next()
+		if err != nil {
+			t.Fatal(err)
+		} else if got != data[i] {
+			t.Fatalf("want %d, got %d", data[i], got)
 		}
-		i++
+	}
+	_, err = itr.Next()
+	if err == nil {
+		t.Fatal("want error, got nil")
+	}
+
+	data = []int{8, 3, 4}
+	itr, err = NewIntIterator(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; itr.HasNext(); i++ {
+		got, err := itr.Next()
+		if err != nil {
+			t.Fatal(err)
+		} else if got != data[i] {
+			t.Fatalf("want %d, got %d", data[i], got)
+		}
+	}
+	_, err = itr.Next()
+	if err == nil {
+		t.Fatal("want error, got nil")
 	}
 }

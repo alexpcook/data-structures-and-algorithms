@@ -37,7 +37,7 @@ func FibonacciIterative(n int) int {
 }
 
 // FibonacciRecursive returns the nth number of the Fibonacci sequence using a recursive approach.
-// It has time complexity O(n) and space complexity O(n), due to recursion.
+// It has time complexity O(2^n) and space complexity O(n), due to recursion.
 func FibonacciRecursive(n int) int {
 	switch n {
 	case 1:

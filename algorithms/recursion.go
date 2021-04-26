@@ -1,5 +1,7 @@
 package algorithms
 
+// FactorialIterative calculates the factorial of n using an iterative approach.
+// It has time complexity O(n) and space complexity O(1).
 func FactorialIterative(n int) int {
 	if n < 0 {
 		return 0
@@ -11,6 +13,8 @@ func FactorialIterative(n int) int {
 	return nFactorial
 }
 
+// FactorialRecursive calculates the factorial of n using a recursive approach.
+// It has time complexity O(n) and space complexity O(n), due to recursion.
 func FactorialRecursive(n int) int {
 	switch {
 	case n < 0:

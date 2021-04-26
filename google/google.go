@@ -106,3 +106,36 @@ func LakeVolume1(heights []int) int {
 
 	return volume
 }
+
+// LakeVolume2 is the dynamic programming approach to sample problem (https://techdevguide.withgoogle.com/resources/former-interview-question-volume-of-lakes/).
+// It has time complexity O(n) and space complexity O(n).
+func LakeVolume2(heights []int) int {
+	max := 0
+	maxLeft := make([]int, len(heights))
+	for i := 0; i < len(heights); i++ {
+		if heights[i] > max {
+			max = heights[i]
+		}
+		maxLeft[i] = max
+	}
+
+	max = 0
+	maxRight := make([]int, len(heights))
+	for i := len(heights) - 1; i > -1; i-- {
+		if heights[i] > max {
+			max = heights[i]
+		}
+		maxRight[i] = max
+	}
+
+	volume := 0
+	for i, height := range heights {
+		if maxLeft[i] < maxRight[i] {
+			volume += maxLeft[i] - height
+		} else {
+			volume += maxRight[i] - height
+		}
+	}
+
+	return volume
+}

@@ -42,7 +42,7 @@ func HasSumWithPair2(nums []int, sum int) bool {
 	return false
 }
 
-// DecompressString is the solution to sample problem  https://techdevguide.withgoogle.com/resources/former-interview-question-compression-and-decompression/#!
+// DecompressString is the solution to sample problem (https://techdevguide.withgoogle.com/resources/former-interview-question-compression-and-decompression/).
 // It has linear time complexity O(n).
 func DecompressString(data string) (string, error) {
 	decompressedData := ""
@@ -75,4 +75,34 @@ func DecompressString(data string) (string, error) {
 	}
 
 	return decompressedData, nil
+}
+
+// LakeVolume1 is the brute force solution to sample problem (https://techdevguide.withgoogle.com/resources/former-interview-question-volume-of-lakes/).
+// It has time complexity O(n^2) due to nested loops, and space complexity O(1).
+func LakeVolume1(heights []int) int {
+	volume := 0
+
+	for i, height := range heights {
+		var maxLeft, maxRight int
+
+		for j := i; j > -1; j-- {
+			if heights[j] > maxLeft {
+				maxLeft = heights[j]
+			}
+		}
+
+		for j := i; j < len(heights); j++ {
+			if heights[j] > maxRight {
+				maxRight = heights[j]
+			}
+		}
+
+		if maxLeft < maxRight {
+			volume += maxLeft - height
+		} else {
+			volume += maxRight - height
+		}
+	}
+
+	return volume
 }

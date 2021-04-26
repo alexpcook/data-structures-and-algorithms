@@ -55,11 +55,6 @@ func ReverseStringRecursive(s string) string {
 	if len(s) == 0 {
 		return ""
 	}
-
 	chars := []rune(s)
-	if len(chars) == 1 {
-		return string(chars[0])
-	}
-
 	return ReverseStringRecursive(string(chars[1:])) + string(chars[0])
 }

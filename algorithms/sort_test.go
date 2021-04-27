@@ -18,6 +18,7 @@ func sortTests() []sortTest {
 		{[]int{8, 2, 7, 1}, []int{1, 2, 7, 8}},
 		{[]int{3}, []int{3}},
 		{[]int{5, 9, 2, 90, 1, -4, -100, -3000, 5, 3, 1, 8, 90}, []int{-3000, -100, -4, 1, 1, 2, 3, 5, 5, 8, 9, 90, 90}},
+		{[]int{4, 1, 3, 2, 1, 2, 9}, []int{1, 1, 2, 2, 3, 4, 9}},
 	}
 }
 
@@ -46,6 +47,13 @@ func TestSelectionSort(t *testing.T) {
 
 func TestInsertionSort(t *testing.T) {
 	err := RunSortFunctionTest(InsertionSort, sortTests())
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestMergeSort(t *testing.T) {
+	err := RunSortFunctionTest(MergeSort, sortTests())
 	if err != nil {
 		t.Fatal(err)
 	}

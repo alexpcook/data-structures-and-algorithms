@@ -1,7 +1,6 @@
 package google
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -19,7 +18,6 @@ func TestIntIterator(t *testing.T) {
 	tests := [][]int{{1}, {8, 3, 4}}
 	for _, test := range tests {
 		itr = NewIntIterator(test)
-		fmt.Println(itr)
 		for i := 0; itr.HasNext(); i++ {
 			got, err := itr.Next()
 			if err != nil {
@@ -80,8 +78,6 @@ func TestIntInterleaver(t *testing.T) {
 			t.Fatal(err)
 		case got != want[i]:
 			t.Fatalf("want %d, got %d", want[i], got)
-		default:
-			fmt.Println(got, err, interleaver)
 		}
 	}
 

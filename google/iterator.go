@@ -34,17 +34,6 @@ func NewIntIterator(data []int) *IntIterator {
 	return iter
 }
 
-// O(n), where n is the number of entries in the linked list
-func (itr *IntIterator) String() string {
-	str := "["
-	currentNode := itr.head
-	for currentNode != nil {
-		str += fmt.Sprintf("%d-->", currentNode.value)
-		currentNode = currentNode.next
-	}
-	return str + "]"
-}
-
 // O(1)
 func (itr *IntIterator) HasNext() bool {
 	return itr.head != nil
@@ -89,17 +78,6 @@ func NewIntInterleaver(iterators ...IntIterator) *IntInterleaver {
 
 	return interleaver
 }
-
-// O(n), where n is the number of iterators in the queue
-// func (itl *IntInterleaver) String() string {
-// 	str := ""
-// 	currentEntry := itl.first
-// 	for currentEntry != nil {
-// 		str += fmt.Sprint(currentEntry.iterator)
-// 		currentEntry = currentEntry.next
-// 	}
-// 	return str
-// }
 
 // O(1)
 func (itl *IntInterleaver) HasNext() bool {

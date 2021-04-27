@@ -6,7 +6,7 @@ import (
 )
 
 type sortTest struct {
-	input, want []int
+	data, want []int
 }
 
 func sortTests() []sortTest {
@@ -22,8 +22,17 @@ func sortTests() []sortTest {
 func TestBubbleSort(t *testing.T) {
 	tests := sortTests()
 	for i, test := range tests {
-		if BubbleSort(test.input); !reflect.DeepEqual(test.want, test.input) {
-			t.Fatalf("test %d: want %v, got %v", i, test.want, test.input)
+		if BubbleSort(test.data); !reflect.DeepEqual(test.want, test.data) {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
+		}
+	}
+}
+
+func TestSelectionSort(t *testing.T) {
+	tests := sortTests()
+	for i, test := range tests {
+		if SelectionSort(test.data); !reflect.DeepEqual(test.want, test.data) {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
 		}
 	}
 }

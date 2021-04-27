@@ -1,6 +1,7 @@
 package algorithms
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -20,29 +21,32 @@ func sortTests() []sortTest {
 	}
 }
 
-func TestBubbleSort(t *testing.T) {
-	tests := sortTests()
-	for i, test := range tests {
-		if BubbleSort(test.data); !reflect.DeepEqual(test.want, test.data) {
-			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
+func RunSortFunctionTest(sortFunc func([]int), testCases []sortTest) error {
+	for i, test := range testCases {
+		if sortFunc(test.data); !reflect.DeepEqual(test.want, test.data) {
+			return fmt.Errorf("test %d: want %v, got %v", i, test.want, test.data)
 		}
+	}
+	return nil
+}
+
+func TestBubbleSort(t *testing.T) {
+	err := RunSortFunctionTest(BubbleSort, sortTests())
+	if err != nil {
+		t.Fatal(err)
 	}
 }
 
 func TestSelectionSort(t *testing.T) {
-	tests := sortTests()
-	for i, test := range tests {
-		if SelectionSort(test.data); !reflect.DeepEqual(test.want, test.data) {
-			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
-		}
+	err := RunSortFunctionTest(SelectionSort, sortTests())
+	if err != nil {
+		t.Fatal(err)
 	}
 }
 
 func TestInsertionSort(t *testing.T) {
-	tests := sortTests()
-	for i, test := range tests {
-		if InsertionSort(test.data); !reflect.DeepEqual(test.want, test.data) {
-			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
-		}
+	err := RunSortFunctionTest(InsertionSort, sortTests())
+	if err != nil {
+		t.Fatal(err)
 	}
 }

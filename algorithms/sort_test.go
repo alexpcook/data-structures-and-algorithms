@@ -37,3 +37,12 @@ func TestSelectionSort(t *testing.T) {
 		}
 	}
 }
+
+func TestInsertionSort(t *testing.T) {
+	tests := sortTests()
+	for i, test := range tests {
+		if InsertionSort(test.data); !reflect.DeepEqual(test.want, test.data) {
+			t.Fatalf("test %d: want %v, got %v", i, test.want, test.data)
+		}
+	}
+}

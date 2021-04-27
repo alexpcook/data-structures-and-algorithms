@@ -26,3 +26,18 @@ func SelectionSort(data []int) {
 		data[i], data[smallestIndex] = data[smallestIndex], data[i]
 	}
 }
+
+// InsertionSort sorts the data slice in increasing order of integers.
+// It has best case time complexity O(n) and average/worst case time complexity O(n^2).
+// It has space complexity O(1).
+func InsertionSort(data []int) {
+	for i := 0; i < len(data)-1; i++ {
+		if data[i+1] < data[i] {
+			for j := 0; j < i+1; j++ {
+				if data[j] > data[i+1] {
+					data[j], data[i+1] = data[i+1], data[j]
+				}
+			}
+		}
+	}
+}

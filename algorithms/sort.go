@@ -59,23 +59,31 @@ func MergeSort(data []int) {
 	MergeSort(left)
 	MergeSort(right)
 
-	leftIndex, rightIndex := 0, 0
-	for i := 0; i < length-1; i++ {
+	i := 0
+	leftIndex := 0
+	rightIndex := 0
+
+	for leftIndex < len(left) && rightIndex < len(right) {
 		leftValue, rightValue := left[leftIndex], right[rightIndex]
 		if leftValue < rightValue {
-			data[i], data[i+1] = leftValue, data[i]
+			data[i] = leftValue
 			leftIndex++
 		} else {
-			data[i], data[i+1] = rightValue, data[i]
+			data[i] = rightValue
 			rightIndex++
 		}
+		i++
+	}
 
-		if leftIndex >= len(left) {
-			copy(data[i+1:], right[rightIndex:])
-			break
-		} else if rightIndex >= len(right) {
-			copy(data[i+1:], left[leftIndex:])
-			break
-		}
+	for leftIndex < len(left) {
+		data[i] = left[leftIndex]
+		leftIndex++
+		i++
+	}
+
+	for rightIndex < len(right) {
+		data[i] = right[rightIndex]
+		rightIndex++
+		i++
 	}
 }

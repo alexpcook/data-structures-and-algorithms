@@ -218,3 +218,37 @@ func (bst *BinarySearchTree) BreadthFirstSearch() []int {
 
 	return result
 }
+
+// BreadthFirstSearchRecursive traverses the nodes of the BST in breadth-first order using recursion.
+// It has time complexity O(n), because we must visit all nodes, and space complexity O(n), because we potentially need to hold all nodes in memory.
+func (bst *BinarySearchTree) BreadthFirstSearchRecursive() []int {
+	if bst.root.left == nil && bst.root.right == nil { // Base recursion case is when the entire BST is a leaf
+		return nil
+	}
+
+	result := make([]int, 0)
+	result = append(result, bst.root.value)
+
+	var leftResult, rightResult []int
+	if bst.root.left != nil {
+		result = append(result, bst.root.left.value)
+		leftBST := &BinarySearchTree{root: bst.root.left}
+		leftResult = leftBST.BreadthFirstSearchRecursive()
+		if leftResult != nil {
+			leftResult = leftResult[1:] // Don't double count
+		}
+	}
+	if bst.root.right != nil {
+		result = append(result, bst.root.right.value)
+		rightBST := &BinarySearchTree{root: bst.root.right}
+		rightResult = rightBST.BreadthFirstSearchRecursive()
+		if rightResult != nil {
+			rightResult = rightResult[1:] // Don't double count
+		}
+	}
+
+	result = append(result, leftResult...)
+	result = append(result, rightResult...)
+
+	return result
+}

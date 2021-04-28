@@ -356,3 +356,22 @@ func TestBinarySearchTreeDepthFirstSearchInOrder(t *testing.T) {
 		t.Fatalf("want %v, got %v", want, got)
 	}
 }
+
+func TestBinarySearchTreeDepthFirstSearchPreOrder(t *testing.T) {
+	/*					9
+	 *			4				20
+	 *		1		6		15		170
+	 */
+	data := []int{4, 6, 20, 170, 15, 1}
+	bst := NewBinarySearchTree(9)
+	for _, d := range data {
+		if err := bst.Insert(d); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	want := []int{9, 4, 1, 6, 20, 15, 170}
+	if got := bst.DepthFirstSearchPreOrder(); !reflect.DeepEqual(want, got) {
+		t.Fatalf("want %v, got %v", want, got)
+	}
+}

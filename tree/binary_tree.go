@@ -171,3 +171,48 @@ func (bst *BinarySearchTree) Delete(value int) error {
 func (bst *BinarySearchTree) Height() int {
 	return bst.height
 }
+
+type bstQueue []*node
+
+func (bstQ *bstQueue) Enqueue(node *node) {
+	*bstQ = append(*bstQ, node)
+}
+
+func (bstQ *bstQueue) Dequeue() *node {
+	if bstQ.IsEmpty() {
+		return nil
+	}
+	val := (*bstQ)[0]
+	*bstQ = (*bstQ)[1:]
+	return val
+}
+
+func (bstQ *bstQueue) IsEmpty() bool {
+	return len(*bstQ) == 0
+}
+
+func (bstQ *bstQueue) Next() *node {
+	if bstQ.IsEmpty() {
+		return nil
+	}
+	return (*bstQ)[0]
+}
+
+func (bst *BinarySearchTree) BreadthFirstSearch() []int {
+	result := make([]int, 0)
+
+	queue := new(bstQueue)
+	queue.Enqueue(bst.root)
+	for !queue.IsEmpty() {
+		currentNode := queue.Dequeue()
+		if currentNode.left != nil {
+			queue.Enqueue(currentNode.left)
+		}
+		if currentNode.right != nil {
+			queue.Enqueue(currentNode.right)
+		}
+		result = append(result, currentNode.value)
+	}
+
+	return result
+}

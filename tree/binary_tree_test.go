@@ -394,3 +394,41 @@ func TestBinarySearchTreeDepthFirstSearchPostOrder(t *testing.T) {
 		t.Fatalf("want %v, got %v", want, got)
 	}
 }
+
+func TestBinarySearchTreeIsValid(t *testing.T) {
+	bst := NewBinarySearchTree(9)
+	if !bst.IsValid() {
+		t.Fatal("bst should be valid")
+	}
+
+	bst.Insert(1)
+	bst.Insert(11)
+	bst.Insert(2)
+	if !bst.IsValid() {
+		t.Fatal("bst should be valid")
+	}
+
+	bstInvalid := &BinarySearchTree{
+		root: &node{
+			value: 9,
+			left: &node{
+				value: 11,
+			},
+		},
+	}
+	if bstInvalid.IsValid() {
+		t.Fatal("bst should be invalid")
+	}
+
+	bstInvalid = &BinarySearchTree{
+		root: &node{
+			value: 9,
+			right: &node{
+				value: 1,
+			},
+		},
+	}
+	if bstInvalid.IsValid() {
+		t.Fatal("bst should be invalid")
+	}
+}

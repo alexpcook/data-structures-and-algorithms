@@ -321,3 +321,32 @@ func (bst *BinarySearchTree) DepthFirstSearchPostOrder() []int {
 
 	return result
 }
+
+// IsValid determines whether the BST follows the expected rules:
+// - The left subtree of a node contains only nodes with keys less than the node's key.
+// - The right subtree of a node contains only nodes with keys greater than the node's key.
+// - Both the left and right subtrees must also be binary search trees.
+func (bst *BinarySearchTree) IsValid() bool {
+	queue := new(bstQueue)
+	queue.Enqueue(bst.root)
+
+	for !queue.IsEmpty() {
+		currentNode := queue.Dequeue()
+
+		if currentNode.left != nil {
+			if currentNode.value <= currentNode.left.value {
+				return false
+			}
+			queue.Enqueue(currentNode.left)
+		}
+
+		if currentNode.right != nil {
+			if currentNode.value >= currentNode.right.value {
+				return false
+			}
+			queue.Enqueue(currentNode.right)
+		}
+	}
+
+	return true
+}

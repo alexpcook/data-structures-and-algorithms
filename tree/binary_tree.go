@@ -252,3 +252,37 @@ func (bst *BinarySearchTree) BreadthFirstSearchRecursive() []int {
 
 	return result
 }
+
+// DepthFirstSearchInOrder traverses the nodes of the BST using in-order depth-first search.
+// It has time complexity O(n), because we must visit all nodes, and space complexity O(h), where h is the height of the tree.
+func (bst *BinarySearchTree) DepthFirstSearchInOrder() []int {
+	result := make([]int, 0)
+
+	if bst.root.left != nil {
+		leftBST := &BinarySearchTree{root: bst.root.left}
+		result = append(result, leftBST.DepthFirstSearchInOrder()...)
+	}
+
+	result = append(result, bst.root.value)
+
+	if bst.root.right != nil {
+		rightBST := &BinarySearchTree{root: bst.root.right}
+		result = append(result, rightBST.DepthFirstSearchInOrder()...)
+	}
+
+	return result
+}
+
+// DepthFirstSearchPreOrder traverses the nodes of the BST using pre-order depth-first search.
+// It has time complexity O(n), because we must visit all nodes, and space complexity O(h), where h is the height of the tree.
+func (bst *BinarySearchTree) DepthFirstSearchPreOrder() []int {
+	result := make([]int, 0)
+	return result
+}
+
+// DepthFirstSearchPostOrder traverses the nodes of the BST using post-order depth-first search.
+// It has time complexity O(n), because we must visit all nodes, and space complexity O(h), where h is the height of the tree.
+func (bst *BinarySearchTree) DepthFirstSearchPostOrder() []int {
+	result := make([]int, 0)
+	return result
+}

@@ -303,5 +303,21 @@ func (bst *BinarySearchTree) DepthFirstSearchPreOrder() []int {
 // It has time complexity O(n), because we must visit all nodes, and space complexity O(h), where h is the height of the tree.
 func (bst *BinarySearchTree) DepthFirstSearchPostOrder() []int {
 	result := make([]int, 0)
+
+	// Append the left BST
+	if bst.root.left != nil {
+		leftBST := &BinarySearchTree{root: bst.root.left}
+		result = append(result, leftBST.DepthFirstSearchPostOrder()...)
+	}
+
+	// Append the right BST
+	if bst.root.right != nil {
+		rightBST := &BinarySearchTree{root: bst.root.right}
+		result = append(result, rightBST.DepthFirstSearchPostOrder()...)
+	}
+
+	// Append the root
+	result = append(result, bst.root.value)
+
 	return result
 }

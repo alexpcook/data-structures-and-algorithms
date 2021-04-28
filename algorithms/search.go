@@ -2,6 +2,15 @@ package algorithms
 
 import "fmt"
 
+/* Theoretical exercises for BFS and DFS
+ * - If you know a solution is not far from the root of the tree: BFS
+ * - If the tree is very deep and solutions are rare: BFS
+ * - If the tree is very wide: DFS
+ * - If solutions are frequent but located deep in the tree: DFS
+ * - Determining whether a path exists between two nodes: DFS
+ * - Finding the shortest path: BFS
+ */
+
 // LinearSearch finds the first index of n in data. It returns a non-nil error if n is not in data.
 // It has time complexity O(n) and space complexity O(1).
 func LinearSearch(data []int, n int) (int, error) {

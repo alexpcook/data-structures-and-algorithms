@@ -198,6 +198,8 @@ func (bstQ *bstQueue) Next() *node {
 	return (*bstQ)[0]
 }
 
+// BreadthFirstSearch traverses the nodes of the BST in breadth-first order.
+// It has time complexity O(n), because we must visit all nodes, and space complexity O(n), because we potentially need to hold all nodes in memory.
 func (bst *BinarySearchTree) BreadthFirstSearch() []int {
 	result := make([]int, 0)
 

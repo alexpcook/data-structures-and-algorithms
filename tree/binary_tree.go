@@ -258,13 +258,16 @@ func (bst *BinarySearchTree) BreadthFirstSearchRecursive() []int {
 func (bst *BinarySearchTree) DepthFirstSearchInOrder() []int {
 	result := make([]int, 0)
 
+	// Append the left side of the BST
 	if bst.root.left != nil {
 		leftBST := &BinarySearchTree{root: bst.root.left}
 		result = append(result, leftBST.DepthFirstSearchInOrder()...)
 	}
 
+	// Append the root
 	result = append(result, bst.root.value)
 
+	// Append the right side of the BST
 	if bst.root.right != nil {
 		rightBST := &BinarySearchTree{root: bst.root.right}
 		result = append(result, rightBST.DepthFirstSearchInOrder()...)

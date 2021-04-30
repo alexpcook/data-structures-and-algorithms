@@ -53,3 +53,18 @@ func MemorizedAddTo80() func(int) int {
 		return result
 	}
 }
+
+// FibonacciRecursiveMemorized uses recursion and dynamic programming to implement an O(n) time complexity
+// Fibonacci sequence.
+func FibonacciRecursiveMemorized() func(int) int {
+	fibCache := make(map[int]int)
+
+	return func(n int) int {
+		if cachedVal, exists := fibCache[n]; exists {
+			return cachedVal
+		}
+		fibN := FibonacciRecursive(n)
+		fibCache[n] = fibN
+		return fibN
+	}
+}

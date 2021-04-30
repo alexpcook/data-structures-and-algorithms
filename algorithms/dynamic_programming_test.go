@@ -46,3 +46,14 @@ func TestMemorizedAddTo80(t *testing.T) {
 		}
 	}
 }
+
+func TestFibonacciRecursiveMemorized(t *testing.T) {
+	input, want := fibonacciTests()
+	fibMemFunc := FibonacciRecursiveMemorized()
+
+	for i := 0; i < len(input); i++ {
+		if got := fibMemFunc(input[i]); got != want[i] {
+			t.Fatalf("want %d, got %d", want[i], got)
+		}
+	}
+}

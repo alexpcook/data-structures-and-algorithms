@@ -59,12 +59,18 @@ func MemorizedAddTo80() func(int) int {
 func FibonacciRecursiveMemorized() func(int) int {
 	fibCache := make(map[int]int)
 
-	return func(n int) int {
+	var fibMemFunc func(int) int
+	fibMemFunc = func(n int) int {
 		if cachedVal, exists := fibCache[n]; exists {
 			return cachedVal
 		}
-		fibN := FibonacciRecursive(n)
+		if n < 3 {
+			return n - 1
+		}
+		fibN := fibMemFunc(n-1) + fibMemFunc(n-2)
 		fibCache[n] = fibN
 		return fibN
 	}
+
+	return fibMemFunc
 }

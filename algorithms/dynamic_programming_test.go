@@ -23,17 +23,19 @@ func TestAddTo80(t *testing.T) {
 
 func TestMemorizedAddTo80(t *testing.T) {
 	data := []int{-19, 0, 5}
+	memAdd80 := MemorizedAddTo80()
+
 	for _, d := range data {
-		MemorizedAddTo80(d) // No cache hits yet
+		_ = memAdd80(d) // No cache hits yet
 	}
 
 	memChan := make(chan int)
 	for _, d := range data {
 		go func() {
-			memChan <- MemorizedAddTo80(d) // These should all be cache hits that take less than five seconds
+			memChan <- memAdd80(d) // These should all be cache hits that take less than four seconds
 		}()
 
-		timer := time.NewTimer(1 * time.Second)
+		timer := time.NewTimer(500 * time.Millisecond)
 		select {
 		case result := <-memChan:
 			if result != d+80 {
